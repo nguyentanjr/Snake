@@ -1,2 +1,5 @@
 ﻿  Game.cpp
-  Snake.vcxproj -> C:\Users\ADMIN\Documents\Visual Studio 2022\FirstConsolse\Snake\x64\Debug\Snake.exe
+  main.cpp
+  Snake.cpp
+  Generating Code...
+  Snake.vcxproj -> C:\Users\ADMIN\Documents\Visual Studio 2022\FirstConsolse\Snake\Game\x64\Debug\Snake.exe
