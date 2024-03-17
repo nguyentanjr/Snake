@@ -8,12 +8,14 @@ const int FRAME_DELAY = 1000 / FPS;
 #include <iostream>
 #include <vector>
 
+const int WIDTH = 600;
+const int HEIGHT = 600;
 
 
 class Game {
 public:
 
-	void gameRunning();
+	void snakeEatCherry(SDL_Renderer* renderer);
 	void mainGame(SDL_Renderer* renderer);
 	SDL_Event gameEvent;
 	bool running() {
@@ -21,5 +23,6 @@ public:
 	}
 private:
 	bool isRunning;
+
 };
 #endif

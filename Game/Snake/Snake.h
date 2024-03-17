@@ -7,6 +7,9 @@
 #include <iostream>
 #include <vector>
 
+const int snakeWidth = 25;
+const int snakeHeight = 25;
+
 struct pos {
 	int x;
 	int y;
@@ -22,7 +25,9 @@ class Snake {
 private:
 	velo velocity;
 	pos pos_head;
+	pos tail[1000];
 public:
+	void outOfWindow();
 	void handleEvents(Snake& snake);
 	void drawHead(SDL_Renderer* renderer);
 	void drawTail(SDL_Renderer* renderer);
