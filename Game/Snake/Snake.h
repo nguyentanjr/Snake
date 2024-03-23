@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <vector>
+#include "Cherry.h"
 
 const int snakeWidth = 25;
 const int snakeHeight = 25;
@@ -25,8 +26,11 @@ class Snake {
 private:
 	velo velocity;
 	pos pos_head;
-	pos tail[1000];
+	pos tail[10000];
+	int tailNearHead;
+	int tailEnd;
 public:
+	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void outOfWindow();
 	void handleEvents(Snake& snake);
 	void drawHead(SDL_Renderer* renderer);
@@ -37,5 +41,7 @@ public:
 	void turnLeft();
 	void turnUp();
 	void turnDown();
+	int presentPosCherryX;
+	int presentPosCherryY;
 };
 #endif

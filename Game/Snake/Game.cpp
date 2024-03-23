@@ -4,7 +4,16 @@
 Snake snake = {};
 Cherry cherry = {};
 
-void Game::snakeEatCherry(SDL_Renderer* renderer) {
+void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
+	tailNearHead++;
+	tailEnd++;
+	tail[tailNearHead] = pos_head;
+	if (cherry.cherryPosX == pos_head.x*25 && cherry.cherryPosY == pos_head.y*25) {
+		cherry.randomCherry(cherry.cherryPosX, cherry.cherryPosY,1, renderer);
+	}
+	else {
+		cherry.randomCherry(cherry.cherryPosX, cherry.cherryPosY,0, renderer);
+	}
 
 }
 void Game::mainGame(SDL_Renderer* renderer) {
@@ -12,7 +21,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	SDL_Delay(30);
 	snake.draw(renderer,snake);
 	snake.outOfWindow();
-	cherry.randomCherry(renderer);
+	snake.snakeEatCherry(cherry,renderer);
 	while (SDL_PollEvent(&gameEvent)) {
 		if (gameEvent.type == SDL_KEYDOWN) {
 			switch (gameEvent.key.keysym.sym) {

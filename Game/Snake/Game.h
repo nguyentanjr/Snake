@@ -14,8 +14,7 @@ const int HEIGHT = 600;
 
 class Game {
 public:
-
-	void snakeEatCherry(SDL_Renderer* renderer);
+	//void randomCherry(SDL_Renderer* renderer);
 	void mainGame(SDL_Renderer* renderer);
 	SDL_Event gameEvent;
 	bool running() {

@@ -8,15 +8,14 @@
 #include "Game.h"
 Uint32 frameStart;
 int frameTime;
-
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 Game game = {};
 void drawPixel(int x, int y)
 {
-	SDL_Rect pixelRect = { x, y, 25, 25 }; 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); 
-	SDL_RenderDrawRect(renderer, &pixelRect); 
+	SDL_Rect pixelRect = { x, y, 25, 25 };
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_RenderDrawRect(renderer, &pixelRect);
 }
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -32,7 +31,7 @@ int main(int argc, char* argv[]) {
 	while (true) {
 		game.mainGame(renderer);
 		SDL_Delay(30);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); 
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 		SDL_RenderClear(renderer);
 		for (int x = 0; x < 600; x += 25)
 		{
