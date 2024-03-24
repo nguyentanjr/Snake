@@ -1,2 +1,7 @@
-﻿  Game.cpp
+﻿  Cherry.cpp
+C:\Users\ADMIN\Documents\Visual Studio 2022\FirstConsolse\Snake\Game\Snake\Cherry.cpp(4,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Game.cpp
+  Snake.cpp
+  main.cpp
+  Generating Code...
   Snake.vcxproj -> C:\Users\ADMIN\Documents\Visual Studio 2022\FirstConsolse\Snake\Game\x64\Debug\Snake.exe

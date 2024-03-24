@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Snake.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Snake.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Snake.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\cherry.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\cherry.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Cherry.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Cherry.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\cherry.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\cherry.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C37F3545-671A-4841-849F-DEACE1DB6501}|Snake\\Snake.vcxproj|solutionrelative:Snake\\Snake.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,8 +38,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 4,
@@ -54,25 +58,21 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Game.cpp",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Game.cpp",
               "RelativeDocumentMoniker": "Snake\\Game.cpp",
               "ToolTip": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Game.cpp",
               "RelativeToolTip": "Snake\\Game.cpp",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAsAAAADAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-16T19:50:26.181Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\main.cpp",
               "RelativeDocumentMoniker": "Snake\\main.cpp",
@@ -85,32 +85,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Snake.h",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.h",
               "RelativeDocumentMoniker": "Snake\\Snake.h",
               "ToolTip": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.h",
               "RelativeToolTip": "Snake\\Snake.h",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAIwB8AAAAPAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAIwBYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-03-16T19:51:41.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Cherry.h",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Cherry.h",
               "RelativeDocumentMoniker": "Snake\\Cherry.h",
               "ToolTip": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Cherry.h",
               "RelativeToolTip": "Snake\\Cherry.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAUAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-17T14:43:15.809Z"
+              "WhenOpened": "2024-03-17T14:43:15.809Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Game.h",
               "RelativeDocumentMoniker": "Snake\\Game.h",
@@ -118,17 +119,18 @@
               "RelativeToolTip": "Snake\\Game.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAIwBoAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-16T19:54:00.135Z"
+              "WhenOpened": "2024-03-16T19:54:00.135Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Snake.cpp",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.cpp",
               "RelativeDocumentMoniker": "Snake\\Snake.cpp",
               "ToolTip": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.cpp",
               "RelativeToolTip": "Snake\\Snake.cpp",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAIwEMAAAAuAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAIwBkAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-16T19:35:01.957Z",
               "EditorCaption": ""

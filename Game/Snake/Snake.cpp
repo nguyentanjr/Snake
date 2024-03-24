@@ -24,6 +24,7 @@ void Snake::drawHead(SDL_Renderer* renderer) {
 void Snake::drawTail(SDL_Renderer* renderer) {
 	SDL_Rect desrect;
 	for (int i = 0; i < tail_size; i++) {
+		//std::cout << i << " ";
 		pos tail_pos = tail[(tailEnd + i) % 10000];
 		SDL_Surface* tmpSurface = IMG_Load("assets/snake_horizontal.png");
 		SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
@@ -34,6 +35,7 @@ void Snake::drawTail(SDL_Renderer* renderer) {
 		SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
 		SDL_DestroyTexture(tmpTexture);
 	}
+	//std::cout<<std::endl;
 	
 }
 void Snake::turnUp() {

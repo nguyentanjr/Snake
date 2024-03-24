@@ -16,7 +16,7 @@ struct pos {
 	int y;
 };
 struct velo {
-	int X = 0;
+	int X = 1;
 	int Y = 0;
 };
 
@@ -27,9 +27,9 @@ private:
 	velo velocity;
 	pos pos_head;
 	pos tail[10000];
-	int tailNearHead;
-	int tailEnd;
-	int tail_size;
+	int tailNearHead = 0;
+	int tailEnd = 0;
+	int tail_size = 0;
 public:
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void outOfWindow();
