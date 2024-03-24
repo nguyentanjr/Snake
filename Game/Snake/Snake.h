@@ -29,6 +29,7 @@ private:
 	pos tail[10000];
 	int tailNearHead;
 	int tailEnd;
+	int tail_size;
 public:
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void outOfWindow();

@@ -5,11 +5,14 @@
 #include<SDL_image.h>
 class Cherry {
 public:
-	void randomCherry(int x,int y,int check,SDL_Renderer* renderer);
-	int cherryPosX = 0;
-	int cherryPosY = 0;
+	void randomCherry();
+	void printCherry(SDL_Renderer* renderer);
+	int cherryPosX;
+	int cherryPosY;
 private:
 	int cherrySize = 20;
+	int random_numberX;
+	int random_numberY;
 };
 
 
