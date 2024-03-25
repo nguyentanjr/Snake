@@ -9,7 +9,6 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 	tailEnd++;
 	tail[tailNearHead % 10000] = pos_head;
 	if (cherry.cherryPosX == pos_head.x * 25 && cherry.cherryPosY == pos_head.y * 25) {
-		std::cout << 1 << std::endl;
 		cherry.randomCherry();
 		tailEnd--;
 		tail_size++;
@@ -24,6 +23,9 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	snake.snakeEatCherry(cherry,renderer);
 	cherry.printCherry(renderer);
 	snake.drawTail(renderer);
+	if (snake.tailCollision() == false) {
+		isRunning = false;
+	}
 	while (SDL_PollEvent(&gameEvent)) {
 		if (gameEvent.type == SDL_KEYDOWN) {
 			switch (gameEvent.key.keysym.sym) {

@@ -17,11 +17,9 @@ public:
 	//void randomCherry(SDL_Renderer* renderer);
 	void mainGame(SDL_Renderer* renderer);
 	SDL_Event gameEvent;
-	bool running() {
-		return isRunning;
-	}
+	bool isRunning = true;
 private:
-	bool isRunning;
+
 
 };
 #endif

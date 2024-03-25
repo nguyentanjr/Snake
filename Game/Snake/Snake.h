@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 #include "Cherry.h"
-
+#include "Game.h"
 const int snakeWidth = 25;
 const int snakeHeight = 25;
 
@@ -31,18 +31,18 @@ private:
 	int tailEnd = 0;
 	int tail_size = 0;
 public:
+	bool isRunning;
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void outOfWindow();
 	void handleEvents(Snake& snake);
 	void drawHead(SDL_Renderer* renderer);
 	void drawTail(SDL_Renderer* renderer);
+	bool tailCollision();
 	void draw(SDL_Renderer* renderer, Snake& snake);
 	void snakeMove();
 	void turnRight();
 	void turnLeft();
 	void turnUp();
 	void turnDown();
-	int presentPosCherryX;
-	int presentPosCherryY;
 };
 #endif

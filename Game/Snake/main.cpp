@@ -28,7 +28,8 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-	while (true) {
+	while (game.isRunning == true) {
+		std::cout << game.isRunning;
 		game.mainGame(renderer);
 		SDL_Delay(30);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);

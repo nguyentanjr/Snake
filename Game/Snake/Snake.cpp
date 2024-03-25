@@ -38,6 +38,17 @@ void Snake::drawTail(SDL_Renderer* renderer) {
 	//std::cout<<std::endl;
 	
 }
+
+bool Snake::tailCollision() {
+	for (int i = 0; i < tail_size; i++) {
+		pos tail_pos = tail[(tailEnd + i) % 10000];
+		if (pos_head.x == tail_pos.x && pos_head.y == tail_pos.y) {
+			std::cout << 1;
+			return false;
+		}
+	}
+	return true;
+}
 void Snake::turnUp() {
 	if (velocity.Y != 1) {
 		velocity.X = 0;
