@@ -16,8 +16,15 @@ class Game {
 public:
 	//void randomCherry(SDL_Renderer* renderer);
 	void mainGame(SDL_Renderer* renderer);
+	void runningGame(SDL_Renderer* renderer);
+	void instruction(SDL_Renderer* renderer);
+	void playAgain();
 	SDL_Event gameEvent;
+	SDL_Event mainEvent;
+	SDL_Event insEvent;
 	bool isRunning = true;
+	bool gameRunning = true;
+	bool insRunning = true;
 private:
 
 

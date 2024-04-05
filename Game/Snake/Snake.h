@@ -30,8 +30,10 @@ private:
 	int tailNearHead = 0;
 	int tailEnd = 0;
 	int tail_size = 0;
+	int tmp = 0;
 public:
 	bool isRunning;
+	std::vector<std::pair<int, int>> pos_obstacles;
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void outOfWindow();
 	void handleEvents(Snake& snake);

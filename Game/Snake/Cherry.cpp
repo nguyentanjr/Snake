@@ -6,6 +6,7 @@ void Cherry::randomCherry() {
 	random_numberY = rand() % 24;
 	cherryPosX = random_numberX * 25;
 	cherryPosY = random_numberY * 25;
+
 }
 void Cherry::printCherry(SDL_Renderer* renderer) {
 	SDL_Surface* tmpSurface = IMG_Load("cherry.png");

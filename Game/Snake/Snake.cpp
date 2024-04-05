@@ -1,15 +1,15 @@
-#include "Snake.h"
+﻿#include "Snake.h"
 #include<SDL.h>
 #include<SDL_image.h>
 #include "Game.h"
-
 
 void Snake::snakeMove() {
 	pos_head.x += velocity.X;
 	pos_head.y += velocity.Y;
 }	
 
-void Snake::drawHead(SDL_Renderer* renderer) {
+//snake_storage();
+void Snake::drawHead(SDL_Renderer* renderer	) {
 	SDL_Surface* tmpSurface = IMG_Load("assets/snake_head.png");
 	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_Rect desrect;
@@ -43,11 +43,10 @@ bool Snake::tailCollision() {
 	for (int i = 0; i < tail_size; i++) {
 		pos tail_pos = tail[(tailEnd + i) % 10000];
 		if (pos_head.x == tail_pos.x && pos_head.y == tail_pos.y) {
-			std::cout << 1;
-			return false;
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 void Snake::turnUp() {
 	if (velocity.Y != 1) {

@@ -132,12 +132,16 @@
   <ItemGroup>
     <ClCompile Include="Cherry.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Image.h" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacles.cpp" />
     <ClCompile Include="Snake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cherry.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Obstacles.h" />
     <ClInclude Include="Snake.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +150,6 @@
     <None Include="SDL2_image.dll" />
     <None Include="SDL2_mixer.dll" />
     <None Include="SDL2_ttf.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\rickroll.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
