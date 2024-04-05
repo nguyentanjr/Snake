@@ -3,17 +3,17 @@
 #include"Cherry.h"
 #include"Obstacles.h"
 #include"Image.h"
+#include"Backround.h"
 Snake snake = {};
 Cherry cherry = {};
 Obstacles obstacles = {};
 Image image = {};
 Game game = {};
+Background background = {};
 void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 	tailNearHead++;
 	tailEnd++;
 	tail[tailNearHead % 10000] = pos_head;
-	SDL_Surface* tmpSurface = IMG_Load("assets/obstacle.png");
-	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	if (cherry.cherryPosX == pos_head.x * 25 && cherry.cherryPosY == pos_head.y * 25) {
 		cherry.randomCherry();
 		tailEnd--;
@@ -22,9 +22,13 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 
 }
 void Game::mainGame(SDL_Renderer* renderer) {
-	snake.snakeMove();
-	SDL_Delay(90);
-	obstacles.renderObstacles(renderer, obstacles.obstacles_easy);
+	background.loadBackground(renderer);
+	background.drawCell(renderer);
+	obstacles.renderObstacles(renderer, obstacles.obs);
+	cherry.cherryObs = obstacles.obstacles_level;
+	snake.snakeObs = obstacles.obstacles_level;
+	snake.snakeMove(); 
+	SDL_Delay(40);
 	snake.drawHead(renderer);
 	snake.outOfWindow();
 	snake.snakeEatCherry(cherry,renderer);
@@ -33,6 +37,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	if (snake.tailCollision() == true) {
 		isRunning = false;
 		gameRunning = false;
+		SDL_Quit();
 	}
 	while (SDL_PollEvent(&gameEvent)) {
 		if (gameEvent.type == SDL_KEYDOWN) {
@@ -61,6 +66,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 
 
 void Game::runningGame(SDL_Renderer* renderer) {
+	obstacles.createObstacles();
 	while (isRunning == true) {
 		image.showMenu(renderer);
 		SDL_RenderPresent(renderer);
@@ -71,10 +77,47 @@ void Game::runningGame(SDL_Renderer* renderer) {
 				int posX = mainEvent.button.x;
 				int posY = mainEvent.button.y;
 				if (posX >= 85 && posX <= 269 && posY >= 419 && posY <= 461) {
-
 					isRunning = true;
-					while(gameRunning == true)
-					game.mainGame(renderer);
+					levelRunning = true;
+					while (levelRunning == true) {
+						image.chooseLevel(renderer);
+						SDL_RenderPresent(renderer);
+						while (SDL_PollEvent(&levelEvent)) {
+							if (levelEvent.type == SDL_QUIT) {
+								isRunning = false;
+								levelRunning = false;
+							}
+							if (levelEvent.type == SDL_MOUSEBUTTONDOWN) {
+								int levelX = levelEvent.button.x;
+								int levelY = levelEvent.button.y;
+								if (levelX >= 102 && levelX <= 498 && levelY >= 117 && levelY <= 176) {
+									gameRunning = true;
+									obstacles.obs = 1;
+									while (gameRunning == true) {
+										game.mainGame(renderer);
+									}
+								}
+								else if (levelX >= 102 && levelX <= 498 && levelY >= 246 && levelY <= 305) {
+									gameRunning = true;
+									obstacles.obs = 2;
+									while (gameRunning == true) {
+										game.mainGame(renderer);
+									}
+								}
+								else if (levelX >= 102 && levelX <= 498 && levelY >= 375 && levelY <= 434) {
+									gameRunning = true;
+									obstacles.obs = 3;
+									while (gameRunning == true) {
+										game.mainGame(renderer);
+									}
+								}
+								else if (levelX >= 202 && levelX <= 398 && levelY >= 518 && levelY <= 562) {
+									levelRunning = false;
+									std::cout << -1;
+								}
+							}
+						}
+					}
 				}
 				else if (posX >= 334 && posX <= 518 && posY >= 419 && posY <= 461) {
 					 insRunning = true;
@@ -97,7 +140,6 @@ void Game::runningGame(SDL_Renderer* renderer) {
 					}
 				}
 				else if (posX >= 207 && posX <= 391 && posY >= 498 && posY <= 540)isRunning = false;
-				SDL_RenderClear(renderer);
 			}
 			
 		}

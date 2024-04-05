@@ -22,9 +22,12 @@ public:
 	SDL_Event gameEvent;
 	SDL_Event mainEvent;
 	SDL_Event insEvent;
+	SDL_Event levelEvent;
 	bool isRunning = true;
 	bool gameRunning = true;
 	bool insRunning = true;
+	bool levelRunning = true;
+	int obs;
 private:
 
 

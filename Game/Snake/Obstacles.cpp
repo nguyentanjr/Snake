@@ -4,11 +4,13 @@
 #include<vector>
 #include "Snake.h"
 
-
-
-void Obstacles::renderObstacles(SDL_Renderer* renderer,std::vector<std::pair<int,int>> obstacles_level) {
+void Obstacles::renderObstacles(SDL_Renderer* renderer,int obs) {
 	SDL_Surface* tmpSurface = IMG_Load("assets/obstacle.png");
 	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	if (obs == 1)obstacles_level = obstacles_easy;
+	else if (obs == 2)obstacles_level = obstacles_medium;
+	else obstacles_level = obstacles_hard;
+
 	for (int i = 0; i < obstacles_level.size(); i++) {
 		SDL_Rect desrect = { obstacles_level[i].first * 25 ,obstacles_level[i].second * 25 ,25,25 };
 		SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
@@ -17,4 +19,22 @@ void Obstacles::renderObstacles(SDL_Renderer* renderer,std::vector<std::pair<int
 	SDL_FreeSurface(tmpSurface);
 }
 
-
+void Obstacles::createObstacles() {
+	for (int i = 2; i < 11; i++) {
+		obstacles_medium.push_back(std::make_pair(4,i));
+		obstacles_medium.push_back(std::make_pair(4, 25-i));
+		obstacles_medium.push_back(std::make_pair(8, i));
+		obstacles_medium.push_back(std::make_pair(8, 25-i));
+		obstacles_medium.push_back(std::make_pair(12, i));
+		obstacles_medium.push_back(std::make_pair(12, 25 - i));
+		obstacles_medium.push_back(std::make_pair(16, i));
+		obstacles_medium.push_back(std::make_pair(16, 25-i));
+		obstacles_medium.push_back(std::make_pair(20, i));
+		obstacles_medium.push_back(std::make_pair(20, 25 - i));
+	}
+	for (int i = 1; i < 24; i+=3) {
+		for (int j = 2; j < 24; j+=3) {
+			obstacles_hard.push_back(std::make_pair(i,j));
+		}
+	}
+}

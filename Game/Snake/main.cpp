@@ -25,8 +25,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-	//SDL_Surface* tmpSurface = IMG_Load("assets/obstacle.png");
-	//SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+
 	game.runningGame(renderer);
 	return 0;
 }

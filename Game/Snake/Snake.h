@@ -25,15 +25,15 @@ class Snake {
 
 private:
 	velo velocity;
-	pos pos_head;
+	pos pos_head = { 0,12 };
 	pos tail[10000];
 	int tailNearHead = 0;
 	int tailEnd = 0;
 	int tail_size = 0;
-	int tmp = 0;
+	int direction = 0;
 public:
 	bool isRunning;
-	std::vector<std::pair<int, int>> pos_obstacles;
+	std::vector<std::pair<int, int>> snakeObs;
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void outOfWindow();
 	void handleEvents(Snake& snake);
