@@ -17,17 +17,20 @@ public:
 	//void randomCherry(SDL_Renderer* renderer);
 	void mainGame(SDL_Renderer* renderer);
 	void runningGame(SDL_Renderer* renderer);
-	void instruction(SDL_Renderer* renderer);
 	void playAgain();
 	SDL_Event gameEvent;
 	SDL_Event mainEvent;
 	SDL_Event insEvent;
 	SDL_Event levelEvent;
+	SDL_Event dieEvent;
 	bool isRunning = true;
 	bool gameRunning = true;
 	bool insRunning = true;
 	bool levelRunning = true;
-	int obs;
+	int playAfterDie = 0;
+	bool again = false;
+	bool checkDelay = false;
+	int delay = 70;
 private:
 
 

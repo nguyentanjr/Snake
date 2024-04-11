@@ -24,14 +24,15 @@ struct velo {
 class Snake {
 
 private:
-	velo velocity;
-	pos pos_head = { 0,12 };
+	int direction = 0;
+public:
 	pos tail[10000];
 	int tailNearHead = 0;
 	int tailEnd = 0;
 	int tail_size = 0;
-	int direction = 0;
-public:
+	pos pos_head = { 0,12 };
+	velo velocity;
+	int tmp = 1;
 	bool isRunning;
 	std::vector<std::pair<int, int>> snakeObs;
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);

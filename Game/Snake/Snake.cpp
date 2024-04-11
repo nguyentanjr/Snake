@@ -24,6 +24,7 @@ void Snake::drawHead(SDL_Renderer* renderer	) {
 }
 
 void Snake::drawTail(SDL_Renderer* renderer) {
+	if (tmp == 0)tail_size = 0;
 	SDL_Rect desrect;
 	for (int i = 0; i < tail_size; i++) {
 		//std::cout << i << " ";
@@ -39,6 +40,7 @@ void Snake::drawTail(SDL_Renderer* renderer) {
 		SDL_FreeSurface(tmpSurface);
 	}
 	
+	
 }
 
 bool Snake::tailCollision() {
@@ -47,37 +49,37 @@ bool Snake::tailCollision() {
 		if (pos_head.x == tail_pos.x && pos_head.y == tail_pos.y) {
 			return true;
 		}
-		for (int j = 0; j < snakeObs.size(); j++) {
-			if (pos_head.x == snakeObs[j].first && pos_head.y == snakeObs[j].second) {
-				return true;
-			}
+	}
+	for (int j = 0; j < snakeObs.size(); j++) {
+		if (pos_head.x == snakeObs[j].first && pos_head.y == snakeObs[j].second) {
+			return true;
 		}
 	}
 	return false;
 }
 void Snake::turnUp() {
-	if (velocity.Y != 1) {
+	if (velocity.Y != 1 && tmp != 0) {
 		velocity.X = 0;
 		velocity.Y = -1;
 	}
 	direction = 1;
 }
 void Snake::turnDown() {
-	if (velocity.Y != -1) {
+	if (velocity.Y != -1 && tmp != 0) {
 		velocity.X = 0;
 		velocity.Y = 1;
 	}
 	direction = 1;
 }
 void Snake::turnRight() {
-	if (velocity.X != -1) {
+	if (velocity.X != -1 && tmp != 0) {
 		velocity.X = 1;
 		velocity.Y = 0;
 	}
 	direction = 0;
 }
 void Snake::turnLeft() {
-	if (velocity.X != 1) {
+	if (velocity.X != 1 && tmp != 0) {
 		velocity.X = -1;
 		velocity.Y = 0;
 	}

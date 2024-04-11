@@ -7,7 +7,7 @@
 void Cherry::randomCherry() {
 
 	srand(time(NULL));
-	do {
+	while(true){
 		random_numberX = rand() % 22 + 2;
 		random_numberY = rand() % 22 + 2;
 		bool check = true;
@@ -18,7 +18,7 @@ void Cherry::randomCherry() {
 			}
 		}
 		if (check == true)break;
-	} while (true);
+	}
 	cherryPosX = random_numberX * 25;
 	cherryPosY = random_numberY * 25;
 

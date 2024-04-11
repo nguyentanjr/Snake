@@ -1,4 +1,5 @@
 #include"Image.h"
+#include"Game.h"
 
 void Image::showMenu(SDL_Renderer* renderer) {
 	SDL_Surface* tmpSurface = IMG_Load("assets/menu.png");
@@ -23,6 +24,32 @@ void Image::chooseLevel(SDL_Renderer* renderer) {
 	SDL_Surface* tmpSurface = IMG_Load("assets/level.png");
 	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_Rect desrect = { 0,0,600,600 };
+	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
+	SDL_DestroyTexture(tmpTexture);
+	SDL_FreeSurface(tmpSurface);
+}
+
+void Image::playAgainIMG(SDL_Renderer* renderer) {
+	SDL_Surface* tmpSurface = IMG_Load("assets/playagain.png");
+	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_Rect desrect;
+	desrect.x = WIDTH / 15;
+	desrect.y = (HEIGHT / 2) - (tmpSurface->h / 2);
+	desrect.w = tmpSurface->w;
+	desrect.h = tmpSurface->h;
+	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
+	SDL_DestroyTexture(tmpTexture);
+	SDL_FreeSurface(tmpSurface);
+}
+
+void Image::returnToMenu(SDL_Renderer* renderer) {
+	SDL_Surface* tmpSurface = IMG_Load("assets/returntomenu.png");
+	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_Rect desrect;
+	desrect.x = HEIGHT / 15 + 320;
+	desrect.y = (WIDTH / 2) - (tmpSurface->h / 2);
+	desrect.w = tmpSurface->w;
+	desrect.h = tmpSurface->h;
 	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
 	SDL_DestroyTexture(tmpTexture);
 	SDL_FreeSurface(tmpSurface);
