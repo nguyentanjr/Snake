@@ -54,3 +54,16 @@ void Image::returnToMenu(SDL_Renderer* renderer) {
 	SDL_DestroyTexture(tmpTexture);
 	SDL_FreeSurface(tmpSurface);
 }
+
+void Image::renderIcon(SDL_Renderer* renderer) {
+	SDL_Surface* tmpSurface = IMG_Load("assets/icon.png");
+	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_Rect desrect;
+	desrect.x = 0;
+	desrect.y = 0;
+	desrect.w = 50;
+	desrect.h = 50;
+	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
+	SDL_DestroyTexture(tmpTexture);
+	SDL_FreeSurface(tmpSurface);
+}

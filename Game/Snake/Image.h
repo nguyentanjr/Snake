@@ -9,6 +9,7 @@ public:
 	void chooseLevel(SDL_Renderer* renderer);
 	void playAgainIMG(SDL_Renderer* renderer);
 	void returnToMenu(SDL_Renderer* renderer);
+	void renderIcon(SDL_Renderer* renderer);
 };
 
 

@@ -21,19 +21,17 @@ void Obstacles::renderObstacles(SDL_Renderer* renderer,int obs) {
 
 void Obstacles::createObstacles() {
 	for (int i = 2; i < 11; i++) {
-		obstacles_medium.push_back(std::make_pair(4,i));
-		obstacles_medium.push_back(std::make_pair(4, 25-i));
-		obstacles_medium.push_back(std::make_pair(8, i));
-		obstacles_medium.push_back(std::make_pair(8, 25-i));
+		obstacles_medium.push_back(std::make_pair(6,i));
+		obstacles_medium.push_back(std::make_pair(6, 25-i));
 		obstacles_medium.push_back(std::make_pair(12, i));
-		obstacles_medium.push_back(std::make_pair(12, 25 - i));
-		obstacles_medium.push_back(std::make_pair(16, i));
-		obstacles_medium.push_back(std::make_pair(16, 25-i));
-		obstacles_medium.push_back(std::make_pair(20, i));
-		obstacles_medium.push_back(std::make_pair(20, 25 - i));
+		obstacles_medium.push_back(std::make_pair(12, 25-i));
+		obstacles_medium.push_back(std::make_pair(18, i));
+		obstacles_medium.push_back(std::make_pair(18, 25 - i));
+
+
 	}
-	for (int i = 1; i < 24; i+=3) {
-		for (int j = 2; j < 24; j+=3) {
+	for (int i = 1; i < 24; i+=4) {
+		for (int j = 2; j < 24; j+=4) {
 			obstacles_hard.push_back(std::make_pair(i,j));
 		}
 	}

@@ -58,6 +58,7 @@ bool Snake::tailCollision() {
 	return false;
 }
 void Snake::turnUp() {
+	SDL_Delay(1);
 	if (velocity.Y != 1 && tmp != 0) {
 		velocity.X = 0;
 		velocity.Y = -1;
@@ -65,7 +66,7 @@ void Snake::turnUp() {
 	direction = 1;
 }
 void Snake::turnDown() {
-	if (velocity.Y != -1 && tmp != 0) {
+	if (velocity.Y != -1 && tmp != 0 ) {
 		velocity.X = 0;
 		velocity.Y = 1;
 	}

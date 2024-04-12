@@ -4,12 +4,14 @@
 #include"Obstacles.h"
 #include"Image.h"
 #include"Backround.h"
+#include"Sound.h"
 Snake snake = {};
 Cherry cherry = {};
 Obstacles obstacles = {};
 Image image = {};
 Game game = {};
 Background background = {};
+Sound sound = {};
 void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 	tailNearHead++;
 	tailEnd++;
@@ -25,23 +27,39 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 void Game::mainGame(SDL_Renderer* renderer) {
 	background.loadBackground(renderer);
 	background.drawCell(renderer);
+	image.renderIcon(renderer);
 	obstacles.renderObstacles(renderer, obstacles.obs);
 	cherry.cherryObs = obstacles.obstacles_level;
 	snake.snakeObs = obstacles.obstacles_level;
+	renderText(renderer, 70, 5, "Level:");
+	if (obstacles.obs == 1) {
+		level = "Easy";
+	}
+	else if (obstacles.obs == 2) {
+		level = "Med";
+	}
+	else level = "Hard";
+	renderText(renderer, 170, 5, level);
+	renderText(renderer, 275, 5, "Score:");
+	renderNumber(renderer, 370, 5, snake.tail_size);
+	renderText(renderer, 460,5, "Die:");
+	renderNumber(renderer, 525, 5, die);
 	snake.snakeMove(); 
-	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false) {
+	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false && delay > 0) {
 		delay -= 3;
 		checkDelay = true;
 	}
-	std::cout << delay << std::endl;
 	SDL_Delay(delay);
 	snake.drawHead(renderer);
 	snake.outOfWindow();
 	snake.snakeEatCherry(cherry,renderer);
 	cherry.printCherry(renderer);
 	snake.drawTail(renderer);
-	//again = false;
 	if (snake.tailCollision() == true) {
+		sound.playSound("sound/hitCollision.wav");
+		SDL_Delay(30);
+		sound.freeSoundBefore();
+		die++;
 		snake.tmp = 0;
 		snake.velocity.X = 0;
 		snake.velocity.Y = 0;
@@ -69,6 +87,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 					if (dieX >= 360 && dieX <= 540 && dieY >= 280 && dieY <= 320)
 					{
 						again = false;
+						die = 0;
 						game.playAgain();
 						game.runningGame(renderer);
 						//SDL_Quit();
@@ -106,6 +125,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 
 void Game::runningGame(SDL_Renderer* renderer) {
 	obstacles.createObstacles();
+	sound.playSound("sound/menuMusic.ogg");
 	while (isRunning == true) {
 		image.showMenu(renderer);
 		SDL_RenderPresent(renderer);
@@ -130,6 +150,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								int levelX = levelEvent.button.x;
 								int levelY = levelEvent.button.y;
 								if (levelX >= 102 && levelX <= 498 && levelY >= 117 && levelY <= 176) {
+									sound.freeSoundBefore();
 									gameRunning = true;
 									obstacles.obs = 1;
 									while (gameRunning == true) {
@@ -137,6 +158,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 									}
 								}
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 246 && levelY <= 305) {
+									sound.freeSoundBefore();
 									gameRunning = true;
 									obstacles.obs = 2;
 									while (gameRunning == true) {
@@ -144,6 +166,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 									}
 								}
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 375 && levelY <= 434) {
+									sound.freeSoundBefore();
 									gameRunning = true;
 									obstacles.obs = 3;
 									while (gameRunning == true) {
@@ -188,6 +211,35 @@ void Game::runningGame(SDL_Renderer* renderer) {
 
 }
 
+void Game::renderNumber(SDL_Renderer* renderer,int x,int y,int var) {
+	TTF_Init();
+	TTF_Font* font = TTF_OpenFont("font.ttf", 27);
+	SDL_Color color = { 255, 255, 255 };
+	std::string text;
+	std::stringstream value;
+	value << var;
+	text = value.str();
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
+	TTF_CloseFont(font);
+	SDL_RenderCopy(renderer, texture, NULL, &dstRect);
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(texture);
+}
+void Game::renderText(SDL_Renderer* renderer, int x, int y, std::string text) {
+	TTF_Init();
+	TTF_Font* font = TTF_OpenFont("font.ttf", 27);
+	SDL_Color color = { 255, 255, 255 };
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
+	TTF_CloseFont(font);
+	SDL_RenderCopy(renderer, texture, NULL, &dstRect);
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(texture);
+}
+
 void Game::playAgain() {
 	gameRunning = true;
 	isRunning = true;
@@ -200,7 +252,7 @@ void Game::playAgain() {
 	snake.pos_head.y = 12;
 	snake.velocity.X = 1;
 	snake.velocity.Y = 0;
-	delay = 70;
+	delay = 40;
 }
 
 
