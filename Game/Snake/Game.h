@@ -32,6 +32,7 @@ public:
 	bool levelRunning = true;
 	int die = 0;
 	bool again = false;
+	bool gameContinue = false;
 	bool checkDelay = false;
 	int delay = 40;
 	std::string level;

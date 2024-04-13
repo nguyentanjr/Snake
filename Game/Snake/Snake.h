@@ -3,13 +3,13 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
-#include <SDL_ttf.h>
+#include <SDL_ttf.h>	
 #include <iostream>
 #include <vector>
 #include "Cherry.h"
 #include "Game.h"
-const int snakeWidth = 25;
-const int snakeHeight = 25;
+const int snakeWidth = 24;
+const int snakeHeight = 24;
 
 struct pos {
 	int x;
@@ -24,7 +24,6 @@ struct velo {
 class Snake {
 
 private:
-	int direction = 0;
 public:
 	pos tail[10000];
 	int tailNearHead = 0;
@@ -34,8 +33,12 @@ public:
 	velo velocity;
 	int tmp = 1;
 	bool isRunning;
+	double headAngle = 0;
+	int checkDirection[10000];
+	int checkCorner[10000];
 	std::vector<std::pair<int, int>> snakeObs;
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
+	void renderAngle(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, int w, int h,int angle);
 	void outOfWindow();
 	void handleEvents(Snake& snake);
 	void drawHead(SDL_Renderer* renderer);
@@ -47,5 +50,7 @@ public:
 	void turnLeft();
 	void turnUp();
 	void turnDown();
+	int changeDirection = 0;
 };
+
 #endif

@@ -8,7 +8,6 @@ class Cherry {
 public:
 	void randomCherry();
 	void printCherry(SDL_Renderer* renderer);
-	void checkRepeat();
 	int cherryPosX = 12;
 	int cherryPosY = 12;
 	std::vector<std::pair<int, int>> cherryObs;

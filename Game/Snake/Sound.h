@@ -5,6 +5,7 @@
 #include<iostream>
 class Sound {
 public:
+	void playMusic(std::string path);
 	void playSound(std::string path);
 	void freeSoundBefore();
 

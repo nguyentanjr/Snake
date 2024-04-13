@@ -12,18 +12,22 @@ Image image = {};
 Game game = {};
 Background background = {};
 Sound sound = {};
+
 void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 	tailNearHead++;
 	tailEnd++;
-	tail[tailNearHead % 10000] = pos_head;
+	tail[tailNearHead % 10000] = pos_head; 
+	//storage position to avoid loop number 0
+	checkDirection[tailNearHead % 10000] = checkDirection[tailNearHead % 10000 - 1];
 	if (cherry.cherryPosX == pos_head.x * 25 && cherry.cherryPosY == pos_head.y * 25) {
+		sound.playSound("sound/eatCherry.wav");
 		cherry.randomCherry();
 		tailEnd--;
 		tail_size++;
 		game.checkDelay = false;
 	}
-
 }
+
 void Game::mainGame(SDL_Renderer* renderer) {
 	background.loadBackground(renderer);
 	background.drawCell(renderer);
@@ -57,8 +61,6 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	snake.drawTail(renderer);
 	if (snake.tailCollision() == true) {
 		sound.playSound("sound/hitCollision.wav");
-		SDL_Delay(30);
-		sound.freeSoundBefore();
 		die++;
 		snake.tmp = 0;
 		snake.velocity.X = 0;
@@ -88,9 +90,9 @@ void Game::mainGame(SDL_Renderer* renderer) {
 					{
 						again = false;
 						die = 0;
+						isRunning = false;
 						game.playAgain();
 						game.runningGame(renderer);
-						//SDL_Quit();
 					}
 				}
 			}
@@ -103,18 +105,23 @@ void Game::mainGame(SDL_Renderer* renderer) {
 			SDL_Quit();
 		}
 		if (gameEvent.type == SDL_KEYDOWN) {
+			snake.changeDirection = 1;
 			switch (gameEvent.key.keysym.sym) {
 			case SDLK_UP:
 				snake.turnUp();
+				snake.checkDirection[snake.tailNearHead % 10000] = 1;
 				break;
 			case SDLK_DOWN:
 				snake.turnDown();
+				snake.checkDirection[snake.tailNearHead % 10000] = 1;
 				break;
 			case SDLK_LEFT:
 				snake.turnLeft();
+				snake.checkDirection[snake.tailNearHead % 10000] = 2;
 				break;
 			case SDLK_RIGHT:
 				snake.turnRight();
+				snake.checkDirection[snake.tailNearHead % 10000] = 2;
 			}
 		}
 	}
@@ -122,10 +129,9 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	SDL_RenderClear(renderer);
 }
 
-
 void Game::runningGame(SDL_Renderer* renderer) {
 	obstacles.createObstacles();
-	sound.playSound("sound/menuMusic.ogg");
+	sound.playMusic("sound/menuMusic.ogg");
 	while (isRunning == true) {
 		image.showMenu(renderer);
 		SDL_RenderPresent(renderer);
@@ -151,6 +157,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								int levelY = levelEvent.button.y;
 								if (levelX >= 102 && levelX <= 498 && levelY >= 117 && levelY <= 176) {
 									sound.freeSoundBefore();
+									sound.playMusic("sound/mainGame.ogg");
 									gameRunning = true;
 									obstacles.obs = 1;
 									while (gameRunning == true) {
@@ -159,6 +166,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								}
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 246 && levelY <= 305) {
 									sound.freeSoundBefore();
+									sound.playMusic("sound/mainGame.ogg");
 									gameRunning = true;
 									obstacles.obs = 2;
 									while (gameRunning == true) {
@@ -167,6 +175,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								}
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 375 && levelY <= 434) {
 									sound.freeSoundBefore();
+									sound.playMusic("sound/mainGame.ogg");
 									gameRunning = true;
 									obstacles.obs = 3;
 									while (gameRunning == true) {
@@ -175,7 +184,6 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								}
 								else if (levelX >= 202 && levelX <= 398 && levelY >= 518 && levelY <= 562) {
 									levelRunning = false;
-									std::cout << -1;
 								}
 							}
 						}
@@ -201,7 +209,10 @@ void Game::runningGame(SDL_Renderer* renderer) {
 						}
 					}
 				}
-				else if (posX >= 207 && posX <= 391 && posY >= 498 && posY <= 540)isRunning = false;
+				else if (posX >= 207 && posX <= 391 && posY >= 498 && posY <= 540) {
+					isRunning = false;
+					SDL_Quit();
+				}
 			}
 			
 		}
@@ -219,7 +230,7 @@ void Game::renderNumber(SDL_Renderer* renderer,int x,int y,int var) {
 	std::stringstream value;
 	value << var;
 	text = value.str();
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+	SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 	SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
 	TTF_CloseFont(font);
@@ -227,11 +238,12 @@ void Game::renderNumber(SDL_Renderer* renderer,int x,int y,int var) {
 	SDL_FreeSurface(textSurface);
 	SDL_DestroyTexture(texture);
 }
+
 void Game::renderText(SDL_Renderer* renderer, int x, int y, std::string text) {
 	TTF_Init();
 	TTF_Font* font = TTF_OpenFont("font.ttf", 27);
 	SDL_Color color = { 255, 255, 255 };
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+	SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 	SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
 	TTF_CloseFont(font);
@@ -247,12 +259,16 @@ void Game::playAgain() {
 	snake.tail_size = 0;
 	snake.tailEnd = 0;
 	snake.tailNearHead = 0;
+	snake.headAngle = 0;
 	memset(snake.tail, 0, sizeof(snake.tail));
+	memset(snake.checkDirection, 0, sizeof(snake.checkDirection));
+	memset(snake.checkCorner, 0, sizeof(snake.checkCorner));
 	snake.pos_head.x = 0;
 	snake.pos_head.y = 12;
 	snake.velocity.X = 1;
 	snake.velocity.Y = 0;
 	delay = 40;
+	
 }
 
 

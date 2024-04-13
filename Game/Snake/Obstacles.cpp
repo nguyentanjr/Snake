@@ -5,7 +5,7 @@
 #include "Snake.h"
 
 void Obstacles::renderObstacles(SDL_Renderer* renderer,int obs) {
-	SDL_Surface* tmpSurface = IMG_Load("assets/obstacle.png");
+	SDL_Surface* tmpSurface = IMG_Load("assets/obstacle2.png");
 	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	if (obs == 1)obstacles_level = obstacles_easy;
 	else if (obs == 2)obstacles_level = obstacles_medium;

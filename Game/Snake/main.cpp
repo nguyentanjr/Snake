@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 	game.runningGame(renderer);
 	return 0;
 }

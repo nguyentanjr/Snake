@@ -24,7 +24,7 @@ void Cherry::randomCherry() {
 
 }
 void Cherry::printCherry(SDL_Renderer* renderer) {
-	SDL_Surface* tmpSurface = IMG_Load("cherry.png");
+	SDL_Surface* tmpSurface = IMG_Load("assets/cherry.png");
 	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_Rect desrect;
 	desrect.x = random_numberX * 25;
