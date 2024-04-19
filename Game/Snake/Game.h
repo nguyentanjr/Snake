@@ -34,7 +34,7 @@ public:
 	bool again = false;
 	bool gameContinue = false;
 	bool checkDelay = false;
-	int delay = 40;
+	int delay = 90;
 	std::string level;
 private:
 

@@ -19,6 +19,8 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 	tail[tailNearHead % 10000] = pos_head; 
 	//storage position to avoid loop number 0
 	checkDirection[tailNearHead % 10000] = checkDirection[tailNearHead % 10000 - 1];
+	//std::cout << checkDirection[tailNearHead % 10000] << std::endl;;
+
 	if (cherry.cherryPosX == pos_head.x * 25 && cherry.cherryPosY == pos_head.y * 25) {
 		sound.playSound("sound/eatCherry.wav");
 		cherry.randomCherry();
@@ -49,7 +51,9 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	renderText(renderer, 460,5, "Die:");
 	renderNumber(renderer, 525, 5, die);
 	snake.snakeMove(); 
+	//every 10 points
 	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false && delay > 0) {
+		std::cout << delay << std::endl;
 		delay -= 3;
 		checkDelay = true;
 	}
@@ -58,11 +62,11 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	snake.outOfWindow();
 	snake.snakeEatCherry(cherry,renderer);
 	cherry.printCherry(renderer);
-	snake.drawTail(renderer);
 	if (snake.tailCollision() == true) {
 		sound.playSound("sound/hitCollision.wav");
 		die++;
-		snake.tmp = 0;
+	//
+	// 	snake.tmp = 0;
 		snake.velocity.X = 0;
 		snake.velocity.Y = 0;
 		again = true;
@@ -109,22 +113,23 @@ void Game::mainGame(SDL_Renderer* renderer) {
 			switch (gameEvent.key.keysym.sym) {
 			case SDLK_UP:
 				snake.turnUp();
-				snake.checkDirection[snake.tailNearHead % 10000] = 1;
+				//snake.checkDirection[snake.tailNearHead % 10000] = 1;
 				break;
 			case SDLK_DOWN:
 				snake.turnDown();
-				snake.checkDirection[snake.tailNearHead % 10000] = 1;
+				//snake.checkDirection[snake.tailNearHead % 10000] = 1;
 				break;
 			case SDLK_LEFT:
 				snake.turnLeft();
-				snake.checkDirection[snake.tailNearHead % 10000] = 2;
+				//snake.checkDirection[snake.tailNearHead % 10000] = 2;
 				break;
 			case SDLK_RIGHT:
 				snake.turnRight();
-				snake.checkDirection[snake.tailNearHead % 10000] = 2;
+				//snake.checkDirection[snake.tailNearHead % 10000] = 2;
 			}
 		}
 	}
+	snake.drawTail(renderer);
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
 }
@@ -255,7 +260,7 @@ void Game::renderText(SDL_Renderer* renderer, int x, int y, std::string text) {
 void Game::playAgain() {
 	gameRunning = true;
 	isRunning = true;
-	snake.tmp = 1;
+	//snake.tmp = 1;
 	snake.tail_size = 0;
 	snake.tailEnd = 0;
 	snake.tailNearHead = 0;

@@ -51,6 +51,10 @@ public:
 	void turnUp();
 	void turnDown();
 	int changeDirection = 0;
+	int checkDuplicateDirectionUp = 0;
+	int checkDuplicateDirectionDown = 0;
+	int checkDuplicateDirectionRight = 0;
+	int checkDuplicateDirectionLeft = 0;
 };
 
 #endif
