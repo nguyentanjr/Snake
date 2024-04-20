@@ -8,6 +8,9 @@ const int FRAME_DELAY = 1000 / FPS;
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <chrono>
+
+using namespace std::chrono;
 
 const int WIDTH = 600;
 const int HEIGHT = 600;
@@ -16,6 +19,8 @@ const int HEIGHT = 600;
 class Game {
 public:
 	//void randomCherry(SDL_Renderer* renderer);
+	Uint32 lastMoveTime = 0;  
+	Uint32 moveInterval = 5000;
 	void mainGame(SDL_Renderer* renderer);
 	void runningGame(SDL_Renderer* renderer);
 	void playAgain();

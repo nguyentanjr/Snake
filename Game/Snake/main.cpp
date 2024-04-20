@@ -7,6 +7,9 @@
 #include "Snake.h"
 #include "Game.h"
 #include "Obstacles.h"
+#include <chrono>
+
+using namespace std::chrono;
 Uint32 frameStart;
 int frameTime;
 SDL_Window* window = NULL;
@@ -26,6 +29,13 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
-	game.runningGame(renderer);
+	while (game.isRunning) {
+		frameStart = SDL_GetTicks();
+		game.runningGame(renderer);
+		frameTime = SDL_GetTicks() - frameStart;
+		if (FRAME_DELAY > frameTime) {
+			SDL_Delay(FRAME_DELAY - frameTime);
+		}
+	}
 	return 0;
 }

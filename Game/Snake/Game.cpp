@@ -31,6 +31,7 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 }
 
 void Game::mainGame(SDL_Renderer* renderer) {
+	
 	background.loadBackground(renderer);
 	background.drawCell(renderer);
 	image.renderIcon(renderer);
@@ -265,6 +266,9 @@ void Game::playAgain() {
 	snake.tailEnd = 0;
 	snake.tailNearHead = 0;
 	snake.headAngle = 0;
+	snake.checkDuplicateDirectionDown = 0;
+	snake.checkDuplicateDirectionUp = 0;
+	snake.checkDuplicateDirectionLeft = 0;
 	memset(snake.tail, 0, sizeof(snake.tail));
 	memset(snake.checkDirection, 0, sizeof(snake.checkDirection));
 	memset(snake.checkCorner, 0, sizeof(snake.checkCorner));
