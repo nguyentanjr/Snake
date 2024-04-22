@@ -5,6 +5,8 @@
 #include"Image.h"
 #include"Backround.h"
 #include"Sound.h"
+#include <chrono>
+#include <thread>
 Snake snake = {};
 Cherry cherry = {};
 Obstacles obstacles = {};
@@ -17,6 +19,7 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 	tailNearHead++;
 	tailEnd++;
 	tail[tailNearHead % 10000] = pos_head; 
+	//std::cout<<pos_head.x * 25 <<" " << pos_head.y * 25 << std::endl;
 	//storage position to avoid loop number 0
 	checkDirection[tailNearHead % 10000] = checkDirection[tailNearHead % 10000 - 1];
 	//std::cout << checkDirection[tailNearHead % 10000] << std::endl;;
@@ -52,13 +55,15 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	renderText(renderer, 460,5, "Die:");
 	renderNumber(renderer, 525, 5, die);
 	snake.snakeMove(); 
+	std::this_thread::sleep_for(std::chrono::milliseconds(80));
+
 	//every 10 points
 	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false && delay > 0) {
 		std::cout << delay << std::endl;
 		delay -= 3;
 		checkDelay = true;
 	}
-	SDL_Delay(delay);
+	//SDL_Delay(delay);
 	snake.drawHead(renderer);
 	snake.outOfWindow();
 	snake.snakeEatCherry(cherry,renderer);
@@ -110,7 +115,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 			SDL_Quit();
 		}
 		if (gameEvent.type == SDL_KEYDOWN) {
-			snake.changeDirection = 1;
+			//snake.changeDirection = 1;
 			switch (gameEvent.key.keysym.sym) {
 			case SDLK_UP:
 				snake.turnUp();

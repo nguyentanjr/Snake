@@ -24,7 +24,7 @@ void Snake::drawHead(SDL_Renderer* renderer) {
 	desrect.h = snakeWidth;
 	desrect.w = snakeHeight;
 	renderAngle(renderer, tmpTexture, desrect.x, desrect.y, desrect.w, desrect.h, headAngle);
-	changeDirection = 0;
+	//changeDirection = 0;
 	SDL_DestroyTexture(tmpTexture);
 	SDL_FreeSurface(tmpSurface);
 }
@@ -33,10 +33,17 @@ void Snake::drawHead(SDL_Renderer* renderer) {
 //checkConer will spam the direction of snake so that normal tail will be disappear
 
 void Snake::turnUp() {
-	changeDirection = 1;
-	checkDuplicateDirectionDown = 0;
+	//changeDirection = 1;
+	isUpping = 1;
+	if (isDowning == 1)
+		checkDuplicateDirectionDown = 1;
+	else
+		checkDuplicateDirectionDown = 0;
+
 	checkDuplicateDirectionRight = 0;
 	checkDuplicateDirectionLeft = 0;
+	//
+	isUpping = 1;
 	if (velocity.Y != 1 && checkDuplicateDirectionUp != 1) {
 		velocity.X = 0;
 		velocity.Y = -1;
@@ -50,8 +57,13 @@ void Snake::turnUp() {
 }
 
 void Snake::turnDown() {
-	changeDirection = 1;
-	checkDuplicateDirectionUp = 0;
+	//changeDirection = 1;
+	isDowning = 1;
+	if (isUpping == 1)
+		checkDuplicateDirectionUp = 1;
+	else 
+		checkDuplicateDirectionUp = 0;
+
 	checkDuplicateDirectionRight = 0;
 	checkDuplicateDirectionLeft = 0;
 	if (velocity.Y != -1 && checkDuplicateDirectionDown != 1) {
@@ -68,10 +80,15 @@ void Snake::turnDown() {
 
 
 void Snake::turnRight() {
-	changeDirection = 1;
+	//changeDirection = 1;
+	isGoingRight = 1;
+	if (isGoingLeft == 1)
+		checkDuplicateDirectionLeft = 1;
+	else
+		checkDuplicateDirectionLeft = 0;
+
 	checkDuplicateDirectionDown = 0;
 	checkDuplicateDirectionUp = 0;
-	checkDuplicateDirectionLeft = 0;
 	if (velocity.X != -1 && checkDuplicateDirectionRight != 1) {
 		velocity.X = 1;
 		velocity.Y = 0;
@@ -84,10 +101,16 @@ void Snake::turnRight() {
 }
 
 void Snake::turnLeft() {
-	changeDirection = 1;
+//	changeDirection = 1;
+	isGoingLeft = 1;
+	if (isGoingRight == 1)
+		checkDuplicateDirectionRight= 1;
+	else
+		checkDuplicateDirectionRight = 0;
+
 	checkDuplicateDirectionDown = 0;
-	checkDuplicateDirectionRight = 0;
 	checkDuplicateDirectionUp = 0;
+	isGoingLeft = 1;
 	if (velocity.X != 1 && checkDuplicateDirectionLeft != 1) {
 		velocity.X = -1;
 		velocity.Y = 0;
@@ -100,145 +123,166 @@ void Snake::turnLeft() {
 }
 
 
+void Snake::renderTail(SDL_Renderer* renderer,SDL_Surface* tmpSurface,SDL_Texture* tmpTexture,std::string path, pos tail_pos) {
+	SDL_Rect desrect;
+	tmpSurface = IMG_Load(path.c_str());
+	tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	desrect.x = tail_pos.x * 25;
+	desrect.y = tail_pos.y * 25;
+	desrect.h = snakeHeight;
+	desrect.w = snakeWidth;
+	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
+}
 
 void Snake::drawTail(SDL_Renderer* renderer) {
-//	if (tmp == 0)tail_size = 0;
-	SDL_Rect desrect;
-	for (int i = 1; i < tail_size; i++) {
-		//std::cout << i << " ";
-		//std::cout << checkCorner[(tailEnd + i) % 10000] << std::endl;
-		//std::cout << checkCorner[(tailEnd + 1) % 10000] << std::endl;
+	SDL_Texture* tmpTexture = NULL;
+	SDL_Surface* tmpSurface = NULL;
+	for (int i = 1; i < tail_size; i++) {	
 		pos tail_pos = tail[(tailEnd + i) % 10000];
-		SDL_Surface* tmpSurface = NULL;
-		SDL_Texture* tmpTexture = NULL;
-	//	std::cout << tail[(tailEnd + i) % 10000].y <<" " << tail[(tailEnd + i - 1) % 10000].y << std::endl;
 		if (checkCorner[(tailEnd + i) % 10000] > 0) {
+			//std::cout << tail[(tailEnd + i + 1) % 10000].y << std::endl;
 			//check the snake go up right
 			//check the snake go up
 			//check the snake go right
 			if (tail[(tailEnd + i + 1) % 10000].x > tail[(tailEnd + i) % 10000].x &&
-				tail[(tailEnd + i - 1) % 10000].y > tail[(tailEnd + i) % 10000].y) {
-					//std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/rightUp.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
+				tail[(tailEnd + i - 1) % 10000].y > tail[(tailEnd + i) % 10000].y &&
+				tail[(tailEnd + i + 1) % 10000].x != 23) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/rightUp.png",tail_pos);
+				std::cout << 1 << std::endl;
 			}
 			//check the snake go up left
 			//check the snake go up
 			//check the snake go left
 			if (tail[(tailEnd + i + 1) % 10000].x < tail[(tailEnd + i) % 10000].x &&
-				tail[(tailEnd + i - 1) % 10000].y > tail[(tailEnd + i) % 10000].y) {
-					//std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/leftUp.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
+				tail[(tailEnd + i - 1) % 10000].y > tail[(tailEnd + i) % 10000].y &&
+				tail[(tailEnd + i + 1) % 10000].x != 0) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/leftUp.png", tail_pos);
+				std::cout << 2 << std::endl;
 			}
 			//check the snake go down right
 			//check the snake go down
 			//check the snake go right
 			else if (tail[(tailEnd + i + 1) % 10000].x > tail[(tailEnd + i) % 10000].x &&
-				tail[(tailEnd + i - 1) % 10000].y < tail[(tailEnd + i) % 10000].y) {
-				//	std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/rightDown.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-					//std::cout << 3 << std::endl;
+				tail[(tailEnd + i - 1) % 10000].y < tail[(tailEnd + i) % 10000].y && 
+				tail[(tailEnd + i + 1) % 10000].x != 23) {
+				std::cout << 3 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/rightDown.png", tail_pos);
 			}
 			//check the snake go down left
 			//check the snake go down
 			//check the snake go left
 			else if (tail[(tailEnd + i + 1) % 10000].x < tail[(tailEnd + i) % 10000].x &&
-				tail[(tailEnd + i - 1) % 10000].y < tail[(tailEnd + i) % 10000].y) {
-					//std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/leftDown.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-					//std::cout << 3 << std::endl;
+				tail[(tailEnd + i - 1) % 10000].y < tail[(tailEnd + i) % 10000].y &&
+				tail[(tailEnd + i + 1) % 10000].x != 0) {
+				std::cout << 4 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/leftDown.png", tail_pos);
 				}
 			//check the snake go right up
 			//check the snake go right
 			//check the snake go up
 			else if (tail[(tailEnd + i) % 10000].y > tail[(tailEnd + i + 1) % 10000].y &&
-				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i - 1) % 10000].x) {
-					std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/right_LeftUp.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-					//	std::cout << 3 << std::endl;
+				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i - 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y != 2) {
+				std::cout << 5 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/right_LeftUp.png", tail_pos);
 				}
-			//check the snake go down right
+			//check the snake go right down 
 			//check the snake go to down
 			//check snake go to right
 			else if (tail[(tailEnd + i) % 10000].y < tail[(tailEnd + i + 1) % 10000].y &&
-				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i - 1) % 10000].x) {
-				//	std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/right_RightDown.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-					//	std::cout << 3 << std::endl;
+				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i - 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y != 23) {
+				std::cout << 6 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/right_RightDown.png", tail_pos);
 				}
-			//check the snake go up left
+			//check the snake go left up
 			//check the snake go to up
 			//check snake go to left
 			else if (tail[(tailEnd + i + 1) % 10000].y < tail[(tailEnd + i) % 10000].y &&
-				tail[(tailEnd + i - 1) % 10000].x > tail[(tailEnd + i) % 10000].x) {
-					//std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/left_RightUp.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-					//	std::cout << 3 << std::endl;
+				tail[(tailEnd + i - 1) % 10000].x > tail[(tailEnd + i) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y != 2 ) {
+				std::cout << 7 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/left_RightUp.png", tail_pos);
+				
 				}
-			//check the snake go dpwn left
+			//check the snake go left down
 			//check the snake go to down
 			//check snake go to left
 			else if (tail[(tailEnd + i + 1) % 10000].y > tail[(tailEnd + i) % 10000].y &&
-				tail[(tailEnd + i - 1) % 10000].x > tail[(tailEnd + i) % 10000].x) {
-				///	std::cout << 1 << std::endl;
-					tmpSurface = IMG_Load("assets/left_LeftDown.png");
-					tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-					desrect.x = tail_pos.x * 25;
-					desrect.y = tail_pos.y * 25;
-					desrect.h = snakeHeight;
-					desrect.w = snakeWidth;
-					SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-					//	std::cout << 3 << std::endl;
+				tail[(tailEnd + i - 1) % 10000].x > tail[(tailEnd + i) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y != 23) {
+				std::cout << 8 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/left_LeftDown.png", tail_pos);
 				}
-		}
-				
 
+			//=========check the snake go out of window========
+			
+
+			//=======check the snake go up ==========
+			//check the snake go left
+			else if (tail[(tailEnd + i) % 10000].y < tail[(tailEnd + i + 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x < tail[(tailEnd + i - 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y == 23) {
+				//std::cout << 1 << std::endl;
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/left_RightUp.png", tail_pos);
+			}
+			//check the snake go right
+			else if (tail[(tailEnd + i) % 10000].y < tail[(tailEnd + i + 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i - 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y == 23) {
+			//	std::cout << 2 << std::endl;
+
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/right_LeftUp.png", tail_pos);
+			}
+
+			//========check the snake go down========
+			//check the snake go left
+			else if (tail[(tailEnd + i) % 10000].y > tail[(tailEnd + i + 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x < tail[(tailEnd + i - 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y == 2) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/left_LeftDown.png", tail_pos);
+			}
+			//check the snake go right
+			else if (tail[(tailEnd + i) % 10000].y > tail[(tailEnd + i + 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i - 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].y == 2) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/right_RightDown.png", tail_pos);
+			}
+
+			//========check the snake go left========
+			//check the snake go up
+			else if (tail[(tailEnd + i) % 10000].y < tail[(tailEnd + i - 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x < tail[(tailEnd + i + 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].x == 23) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/leftUp.png", tail_pos);
+			}
+			//check the snake go down
+			else if (tail[(tailEnd + i) % 10000].y > tail[(tailEnd + i - 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x < tail[(tailEnd + i + 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].x == 23) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/leftDown.png", tail_pos);
+			}
+
+			//========check the snake go right========
+			//check the snake go up
+			else if (tail[(tailEnd + i) % 10000].y < tail[(tailEnd + i - 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i + 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].x == 0) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/rightUp.png", tail_pos);
+			}
+			//check the snake go down
+			else if (tail[(tailEnd + i) % 10000].y > tail[(tailEnd + i - 1) % 10000].y &&
+				tail[(tailEnd + i) % 10000].x > tail[(tailEnd + i + 1) % 10000].x &&
+				tail[(tailEnd + i + 1) % 10000].x == 0) {
+				renderTail(renderer, tmpSurface, tmpTexture, "assets/rightDown.png", tail_pos);
+			}
+		}
 
 		//tail normal handle
 		else {
 			tmpSurface = IMG_Load("assets/snakee.png");
 			tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+			SDL_Rect desrect;
 			desrect.x = tail_pos.x * 25;
 			desrect.y = tail_pos.y * 25;
 			desrect.h = snakeHeight;
@@ -249,15 +293,15 @@ void Snake::drawTail(SDL_Renderer* renderer) {
 				renderAngle(renderer, tmpTexture, desrect.x, desrect.y, desrect.w, desrect.h, 0);
 			
 		}
-		SDL_DestroyTexture(tmpTexture);
-		SDL_FreeSurface(tmpSurface);
 	}
+
+	//final tail handle
 	if(tail_size > 0)
 	for (int i = 0; i < 1; i++) {
 		pos tail_pos = tail[(tailEnd + i) % 10000];
-		SDL_Surface* tmpSurface = IMG_Load("assets/tail.png");
-		SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-		desrect.x = tail_pos.x * 25;
+		tmpSurface = IMG_Load("assets/tail.png");
+		tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+		SDL_Rect desrect;s
 		desrect.y = tail_pos.y * 25;
 		desrect.h = 25;
 		desrect.w = snakeHeight;
@@ -270,10 +314,10 @@ void Snake::drawTail(SDL_Renderer* renderer) {
 			renderAngle(renderer, tmpTexture, desrect.x, desrect.y, desrect.w, desrect.h, 90);
 		else if (checkDirection[(tailEnd + i) % 10000] == 1 && (tail[(tailEnd + i + 1) % 10000].y < tail[(tailEnd + i) % 10000].y))
 			renderAngle(renderer, tmpTexture, desrect.x, desrect.y, desrect.w, desrect.h, -90);
-		SDL_DestroyTexture(tmpTexture);
-		SDL_FreeSurface(tmpSurface);
+
 	}
-	
+	SDL_DestroyTexture(tmpTexture);
+	SDL_FreeSurface(tmpSurface);
 }
 
 bool Snake::tailCollision() {

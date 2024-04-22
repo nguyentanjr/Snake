@@ -36,6 +36,10 @@ public:
 	double headAngle = 0;
 	int checkDirection[10000];
 	int checkCorner[10000];
+	int isUpping = 0;
+	int isDowning = 0;
+	int isGoingRight = 0;
+	int	isGoingLeft = 0;
 	std::vector<std::pair<int, int>> snakeObs;
 	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
 	void renderAngle(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, int w, int h,int angle);
@@ -43,6 +47,7 @@ public:
 	void handleEvents(Snake& snake);
 	void drawHead(SDL_Renderer* renderer);
 	void drawTail(SDL_Renderer* renderer);
+	void renderTail(SDL_Renderer* renderer, SDL_Surface* tmpSurface, SDL_Texture* tmpTexture, std::string path, pos tail_pos);
 	bool tailCollision();
 	void draw(SDL_Renderer* renderer, Snake& snake);
 	void snakeMove();

@@ -3,9 +3,7 @@
 #include"Obstacles.h"
 
 
-
 void Cherry::randomCherry() {
-
 	srand(time(NULL));
 	while(true){
 		random_numberX = rand() % 22 + 2;
