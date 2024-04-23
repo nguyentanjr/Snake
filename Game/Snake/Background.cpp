@@ -1,7 +1,7 @@
 ﻿#include"Backround.h"
 
 void Background::loadBackground(SDL_Renderer* renderer) {
-	SDL_Surface* tmpSurface = IMG_Load("assets/backgroudnd.png");
+	SDL_Surface* tmpSurface = IMG_Load("assets/backgroudd.png");
 	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_Rect desrect = { 0,50,600,600 };
 	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
