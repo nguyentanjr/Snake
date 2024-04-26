@@ -83,8 +83,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-26T11:22:00.84Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -98,7 +97,7 @@
               "RelativeDocumentMoniker": "Snake\\Snake.cpp",
               "ToolTip": "C:\\Users\\ADMIN\\Documents\\Visual Studio 2022\\FirstConsolse\\Snake\\Game\\Snake\\Snake.cpp",
               "RelativeToolTip": "Snake\\Snake.cpp",
-              "ViewState": "AQIAADABAAAAAAAAAAAAAE8BAABEAAAA",
+              "ViewState": "AQIAAAIBAAAAAAAAAAAowBIBAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-16T19:35:01.957Z",
               "EditorCaption": ""
@@ -113,8 +112,7 @@
               "RelativeToolTip": "Snake\\Game.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-16T19:50:26.181Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-16T19:50:26.181Z"
             },
             {
               "$type": "Document",
@@ -126,8 +124,7 @@
               "RelativeToolTip": "Snake\\main.cpp",
               "ViewState": "AQIAAB4AAAAAAAAAAAAAACgAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-16T19:54:23.855Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-16T19:54:23.855Z"
             },
             {
               "$type": "Document",
@@ -175,8 +172,7 @@
               "RelativeToolTip": "Snake\\Image.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-04-04T03:13:54.281Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-04T03:13:54.281Z"
             },
             {
               "$type": "Document",
@@ -224,8 +220,7 @@
               "RelativeToolTip": "Snake\\Cherry.cpp",
               "ViewState": "AQIAABIAAAAAAAAAAAAAAAUAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-17T14:43:20.285Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-17T14:43:20.285Z"
             },
             {
               "$type": "Document",
