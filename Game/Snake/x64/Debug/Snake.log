@@ -1,3 +1,2 @@
-﻿  Snake.cpp
-C:\Users\ADMIN\Documents\Visual Studio 2022\FirstConsolse\Snake\Game\Snake\Snake.cpp(26,80): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+﻿  Game.cpp
   Snake.vcxproj -> C:\Users\ADMIN\Documents\Visual Studio 2022\FirstConsolse\Snake\Game\x64\Debug\Snake.exe

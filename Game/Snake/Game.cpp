@@ -55,7 +55,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	renderText(renderer, 460,5, "Die:");
 	renderNumber(renderer, 525, 5, die);
 	snake.snakeMove(); 
-	std::this_thread::sleep_for(std::chrono::milliseconds(80));
+	std::this_thread::sleep_for(std::chrono::milliseconds(60));
 
 	//every 10 points
 	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false && delay > 0) {
