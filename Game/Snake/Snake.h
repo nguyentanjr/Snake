@@ -40,9 +40,10 @@ public:
 	int isDowning = 0;
 	int isGoingRight = 0;
 	int	isGoingLeft = 0;
+	bool pause = false;
 	std::vector<std::pair<int, int>> snakeObs;
-	void snakeEatCherry(Cherry& cherry,SDL_Renderer* renderer);
-	void renderAngle(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, int w, int h,int angle);
+	void snakeEatCherry(Cherry& cherry, SDL_Renderer* renderer);
+	void renderAngle(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, int w, int h, int angle);
 	void outOfWindow();
 	void handleEvents(Snake& snake);
 	void drawHead(SDL_Renderer* renderer);

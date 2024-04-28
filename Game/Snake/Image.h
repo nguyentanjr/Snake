@@ -10,6 +10,9 @@ public:
 	void playAgainIMG(SDL_Renderer* renderer);
 	void returnToMenu(SDL_Renderer* renderer);
 	void renderIcon(SDL_Renderer* renderer);
+	void renderTip(SDL_Renderer* renderer);
+	void renderTipIMG(SDL_Renderer* renderer);
+	void renderBackButton(SDL_Renderer* renderer);
 };
 
 

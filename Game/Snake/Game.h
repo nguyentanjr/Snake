@@ -19,12 +19,10 @@ const int HEIGHT = 600;
 class Game {
 public:
 	//void randomCherry(SDL_Renderer* renderer);
-	Uint32 lastMoveTime = 0;  
-	Uint32 moveInterval = 5000;
 	void mainGame(SDL_Renderer* renderer);
 	void runningGame(SDL_Renderer* renderer);
 	void playAgain();
-	void renderNumber(SDL_Renderer* renderer, int x, int y,int var);
+	void renderNumber(SDL_Renderer* renderer, int x, int y, int var);
 	void renderText(SDL_Renderer* renderer, int x, int y, std::string text);
 	SDL_Event gameEvent;
 	SDL_Event mainEvent;
@@ -39,8 +37,9 @@ public:
 	bool again = false;
 	bool gameContinue = false;
 	bool checkDelay = false;
-	int delay = 90;
+	int delay = 50;
 	std::string level;
+	bool tip = false;
 private:
 
 

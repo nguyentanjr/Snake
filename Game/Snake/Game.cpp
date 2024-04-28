@@ -15,15 +15,16 @@ Game game = {};
 Background background = {};
 Sound sound = {};
 
-void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
+void Snake::snakeEatCherry(Cherry& cherry, SDL_Renderer* renderer) {
+	//if (pause == false) {
 	tailNearHead++;
 	tailEnd++;
-	tail[tailNearHead % 10000] = pos_head; 
-	//std::cout<<pos_head.x * 25 <<" " << pos_head.y * 25 << std::endl;
+	tail[tailNearHead % 10000] = pos_head;
 	//storage position to avoid loop number 0
+	//checkDirection only working when press nagavition button so...
+	//update direction for all tail because it's only update one tail
 	checkDirection[tailNearHead % 10000] = checkDirection[tailNearHead % 10000 - 1];
-	//std::cout << checkDirection[tailNearHead % 10000] << std::endl;;
-
+	//}
 	if (cherry.cherryPosX == pos_head.x * 25 && cherry.cherryPosY == pos_head.y * 25) {
 		sound.playSound("sound/eatCherry.wav");
 		cherry.randomCherry();
@@ -34,9 +35,9 @@ void Snake::snakeEatCherry(Cherry &cherry,SDL_Renderer* renderer) {
 }
 
 void Game::mainGame(SDL_Renderer* renderer) {
-	
+
 	background.loadBackground(renderer);
-	background.drawCell(renderer);
+	//background.drawCell(renderer);
 	image.renderIcon(renderer);
 	obstacles.renderObstacles(renderer, obstacles.obs);
 	cherry.cherryObs = obstacles.obstacles_level;
@@ -52,33 +53,34 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	renderText(renderer, 170, 5, level);
 	renderText(renderer, 275, 5, "Score:");
 	renderNumber(renderer, 370, 5, snake.tail_size);
-	renderText(renderer, 460,5, "Die:");
+	renderText(renderer, 460, 5, "Die:");
 	renderNumber(renderer, 525, 5, die);
-	snake.snakeMove(); 
-	std::this_thread::sleep_for(std::chrono::milliseconds(60));
+	snake.snakeMove();
+	std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
 	//every 10 points
 	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false && delay > 0) {
-		std::cout << delay << std::endl;
+		//std::cout << delay << std::endl;
 		delay -= 3;
 		checkDelay = true;
 	}
 	//SDL_Delay(delay);
 	snake.drawHead(renderer);
 	snake.outOfWindow();
-	snake.snakeEatCherry(cherry,renderer);
+	snake.snakeEatCherry(cherry, renderer);
 	cherry.printCherry(renderer);
 	if (snake.tailCollision() == true) {
 		sound.playSound("sound/hitCollision.wav");
 		die++;
-	//
-	// 	snake.tmp = 0;
 		snake.velocity.X = 0;
 		snake.velocity.Y = 0;
 		again = true;
 		while (again) {
-			image.playAgainIMG(renderer);
-			image.returnToMenu(renderer);
+			if (tip == false) {
+				image.playAgainIMG(renderer);
+				image.returnToMenu(renderer);
+				image.renderTip(renderer);
+			}
 			SDL_RenderPresent(renderer);
 			while (SDL_PollEvent(&dieEvent)) {
 				if (dieEvent.type == SDL_QUIT) {
@@ -104,6 +106,43 @@ void Game::mainGame(SDL_Renderer* renderer) {
 						game.playAgain();
 						game.runningGame(renderer);
 					}
+					if (dieX >= 200 && dieX <= 380 && dieY >= 200 && dieY <= 240) {
+						tip = true;
+						if (tip == true) {
+							image.renderTipIMG(renderer);
+							image.renderBackButton(renderer);
+						}
+						SDL_Event backEvent;
+						while (tip == true) {
+							SDL_RenderPresent(renderer);
+							while (SDL_PollEvent(&backEvent)) {
+								if (backEvent.type == SDL_QUIT) {
+									again = false;
+									gameRunning = false;
+									isRunning = false;
+								}
+								if (backEvent.type == SDL_MOUSEBUTTONDOWN) {
+									int backX = backEvent.button.x;
+									int backY = backEvent.button.y;
+									if (backX >= 0 && backX <= 50 && backY >= 0 && backY <= 50) {
+										tip = false;
+										SDL_RenderClear(renderer);
+										background.loadBackground(renderer);
+										image.renderIcon(renderer);
+										renderText(renderer, 70, 5, "Level:");
+										renderText(renderer, 170, 5, level);
+										renderText(renderer, 275, 5, "Score:");
+										renderNumber(renderer, 370, 5, snake.tail_size);
+										renderText(renderer, 460, 5, "Die:");
+										renderNumber(renderer, 525, 5, die);
+										snake.snakeMove();
+										snake.drawHead(renderer);
+										cherry.printCherry(renderer);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -115,23 +154,26 @@ void Game::mainGame(SDL_Renderer* renderer) {
 			SDL_Quit();
 		}
 		if (gameEvent.type == SDL_KEYDOWN) {
-			//snake.changeDirection = 1;
 			switch (gameEvent.key.keysym.sym) {
 			case SDLK_UP:
 				snake.turnUp();
-				//snake.checkDirection[snake.tailNearHead % 10000] = 1;
 				break;
 			case SDLK_DOWN:
 				snake.turnDown();
-				//snake.checkDirection[snake.tailNearHead % 10000] = 1;
 				break;
 			case SDLK_LEFT:
 				snake.turnLeft();
-				//snake.checkDirection[snake.tailNearHead % 10000] = 2;
 				break;
 			case SDLK_RIGHT:
 				snake.turnRight();
-				//snake.checkDirection[snake.tailNearHead % 10000] = 2;
+				break;
+			case SDLK_p:
+				snake.pause = true;
+				break;
+			case SDLK_c:
+				snake.pause = false;
+				break;
+
 			}
 		}
 	}
@@ -156,7 +198,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 					isRunning = true;
 					levelRunning = true;
 					while (levelRunning == true) {
-						image.chooseLevel(renderer);	
+						image.chooseLevel(renderer);
 						SDL_RenderPresent(renderer);
 						while (SDL_PollEvent(&levelEvent)) {
 							if (levelEvent.type == SDL_QUIT) {
@@ -201,7 +243,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 					}
 				}
 				else if (posX >= 334 && posX <= 518 && posY >= 419 && posY <= 461) {
-					 insRunning = true;
+					insRunning = true;
 					while (insRunning == true) {
 						image.showInstruction(renderer);
 						SDL_RenderPresent(renderer);
@@ -225,15 +267,15 @@ void Game::runningGame(SDL_Renderer* renderer) {
 					SDL_Quit();
 				}
 			}
-			
+
 		}
-		
+
 	}
 	SDL_RenderClear(renderer);
 
 }
 
-void Game::renderNumber(SDL_Renderer* renderer,int x,int y,int var) {
+void Game::renderNumber(SDL_Renderer* renderer, int x, int y, int var) {
 	TTF_Init();
 	TTF_Font* font = TTF_OpenFont("font.ttf", 27);
 	SDL_Color color = { 255, 255, 255 };
@@ -282,7 +324,7 @@ void Game::playAgain() {
 	snake.velocity.X = 1;
 	snake.velocity.Y = 0;
 	delay = 40;
-	
+
 }
 
 
