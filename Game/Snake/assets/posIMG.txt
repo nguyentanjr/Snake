@@ -1,6 +1,0 @@
-exit : 207,498
-play: 85,419
-how: 334,419
-
-width: 184
-height:42

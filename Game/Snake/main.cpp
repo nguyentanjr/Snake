@@ -28,6 +28,8 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+	SDL_Surface* iconSurface = IMG_Load("assets/images/icon.png");
+	SDL_SetWindowIcon(window, iconSurface);
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 	while (game.isRunning) {
 		frameStart = SDL_GetTicks();

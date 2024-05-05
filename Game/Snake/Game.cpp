@@ -1,63 +1,41 @@
 ﻿#include"Game.h"
-#include"Snake.h"
-#include"Cherry.h"
-#include"Obstacles.h"
-#include"Image.h"
-#include"Backround.h"
-#include"Sound.h"
 #include <chrono>
 #include <thread>
-Snake snake = {};
 Cherry cherry = {};
+Snake snake = {};
 Obstacles obstacles = {};
-Image image = {};
-Game game = {};
-Background background = {};
-Sound sound = {};
-
-void Snake::snakeEatCherry(Cherry& cherry, SDL_Renderer* renderer) {
-	//if (pause == false) {
-	tailNearHead++;
-	tailEnd++;
-	tail[tailNearHead % 10000] = pos_head;
-	//storage position to avoid loop number 0
-	//checkDirection only working when press nagavition button so...
-	//update direction for all tail because it's only update one tail
-	checkDirection[tailNearHead % 10000] = checkDirection[tailNearHead % 10000 - 1];
-	//}
-	if (cherry.cherryPosX == pos_head.x * 25 && cherry.cherryPosY == pos_head.y * 25) {
-		sound.playSound("sound/eatCherry.wav");
-		cherry.randomCherry();
-		tailEnd--;
-		tail_size++;
-		game.checkDelay = false;
-	}
-}
 
 void Game::mainGame(SDL_Renderer* renderer) {
-
-	background.loadBackground(renderer);
+	std::cout<<delay<<std::endl;
+	background.loadImage(renderer, "assets/images/background.jpg", 0, 50);
+	scoreboard.loadImageWithSize(renderer, "assets/images/scoreboard.png", 0, 0,600,50);
 	//background.drawCell(renderer);
-	image.renderIcon(renderer);
-	obstacles.renderObstacles(renderer, obstacles.obs);
+	obstacles.renderObstacles(renderer, obstacles.level);
 	cherry.cherryObs = obstacles.obstacles_level;
 	snake.snakeObs = obstacles.obstacles_level;
-	renderText(renderer, 70, 5, "Level:");
-	if (obstacles.obs == 1) {
+	
+	renderText(renderer, 70, 8, "Level:");
+	if (obstacles.level == "easy") {
 		level = "Easy";
 	}
-	else if (obstacles.obs == 2) {
+	else if (obstacles.level == "medium") {
 		level = "Med";
 	}
 	else level = "Hard";
-	renderText(renderer, 170, 5, level);
-	renderText(renderer, 275, 5, "Score:");
-	renderNumber(renderer, 370, 5, snake.tail_size);
-	renderText(renderer, 460, 5, "Die:");
-	renderNumber(renderer, 525, 5, die);
-	snake.snakeMove();
-	std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+	renderText(renderer, 143, 8, level);
+	renderText(renderer, 260, 8, "Score:");
+	renderNumber(renderer, 353, 8, snake.tail_size);
+	renderText(renderer, 445, 8, "Dead:");
+	renderNumber(renderer, 521, 8, dead);
 
+	snake.Move();
+	snake.goOutOfWindow();
+	if(snake.eatCherry(cherry, renderer))checkDelay = false;
+	cherry.printCherry(renderer);
+	snake.drawHead(renderer);
+	snake.drawTail(renderer);
+	std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+	
 	//every 10 points
 	if (snake.tail_size % 10 == 0 && snake.tail_size != 0 && checkDelay == false && delay > 0) {
 		//std::cout << delay << std::endl;
@@ -65,79 +43,62 @@ void Game::mainGame(SDL_Renderer* renderer) {
 		checkDelay = true;
 	}
 	//SDL_Delay(delay);
-	snake.drawHead(renderer);
-	snake.outOfWindow();
-	snake.snakeEatCherry(cherry, renderer);
-	cherry.printCherry(renderer);
 	if (snake.tailCollision() == true) {
-		sound.playSound("sound/hitCollision.wav");
-		die++;
-		snake.velocity.X = 0;
-		snake.velocity.Y = 0;
+		crash.playSound("assets/sound/hitCollision.wav");
+		dead++;
+		snake.stopMoving();
 		again = true;
 		while (again) {
 			if (tip == false) {
-				image.playAgainIMG(renderer);
-				image.returnToMenu(renderer);
-				image.renderTip(renderer);
+				playAgain.loadImage(renderer, "assets/images/playagain.png", HEIGHT / 15, (WIDTH / 2) - (40 / 2));
+				returnMenu.loadImage(renderer, "assets/images/returntomenu.png", HEIGHT / 15 + 320, (WIDTH / 2) - (40 / 2));
+				renderTip.loadImage(renderer, "assets/images/tip.png", 200, 200);
 			}
 			SDL_RenderPresent(renderer);
-			while (SDL_PollEvent(&dieEvent)) {
-				if (dieEvent.type == SDL_QUIT) {
+			while (SDL_PollEvent(&deadEvent)) {
+				if (deadEvent.type == SDL_QUIT) {
 					again = false;
 					gameRunning = false;
 					isRunning = false;
 					SDL_Quit();
 				}
-				if (dieEvent.type == SDL_MOUSEBUTTONDOWN) {
-					int dieX = dieEvent.button.x;
-					int dieY = dieEvent.button.y;
-					if (dieX >= 40 && dieX <= 220 && dieY >= 280 && dieY <= 320)
+				if (deadEvent.type == SDL_MOUSEBUTTONDOWN) {
+					int deadX = deadEvent.button.x;
+					int deadY = deadEvent.button.y;
+					//play again
+					if (deadX >= 40 && deadX <= 220 && deadY >= 280 && deadY <= 320)
 					{
 						again = false;
-						game.playAgain();
-						game.mainGame(renderer);
+					//	sound.playSound("assets/sound/click.wav");
+						reset();
+						mainGame(renderer);
 					}
-					if (dieX >= 360 && dieX <= 540 && dieY >= 280 && dieY <= 320)
+					//back to menu
+					if (deadX >= 360 && deadX <= 540 && deadY >= 280 && deadY <= 320)
 					{
 						again = false;
-						die = 0;
-						isRunning = false;
-						game.playAgain();
-						game.runningGame(renderer);
+						dead = 0;
+						//sound.playSound("assets/sound/click.wav");
+						reset();
+						runningGame(renderer);
 					}
-					if (dieX >= 200 && dieX <= 380 && dieY >= 200 && dieY <= 240) {
+					if (deadX >= 200 && deadX <= 380 && deadY >= 200 && deadY <= 240) {
 						tip = true;
-						if (tip == true) {
-							image.renderTipIMG(renderer);
-							image.renderBackButton(renderer);
-						}
-						SDL_Event backEvent;
-						while (tip == true) {
+							///sound.playSound("assets/sound/click.wav");
+							TipIMG.loadImage(renderer, "assets/images/tipIMG.png", 0, 0);
+							backButton.loadImageWithSize(renderer, "assets/images/back.png", 0, 0, 50, 50);
 							SDL_RenderPresent(renderer);
+						SDL_Event backEvent;
+						while (tip == true) {				
 							while (SDL_PollEvent(&backEvent)) {
 								if (backEvent.type == SDL_QUIT) {
-									again = false;
-									gameRunning = false;
-									isRunning = false;
+									SDL_Quit();
 								}
 								if (backEvent.type == SDL_MOUSEBUTTONDOWN) {
 									int backX = backEvent.button.x;
 									int backY = backEvent.button.y;
 									if (backX >= 0 && backX <= 50 && backY >= 0 && backY <= 50) {
-										tip = false;
-										SDL_RenderClear(renderer);
-										background.loadBackground(renderer);
-										image.renderIcon(renderer);
-										renderText(renderer, 70, 5, "Level:");
-										renderText(renderer, 170, 5, level);
-										renderText(renderer, 275, 5, "Score:");
-										renderNumber(renderer, 370, 5, snake.tail_size);
-										renderText(renderer, 460, 5, "Die:");
-										renderNumber(renderer, 525, 5, die);
-										snake.snakeMove();
-										snake.drawHead(renderer);
-										cherry.printCherry(renderer);
+										renderAfterClickBackButton(renderer);
 									}
 								}
 							}
@@ -173,20 +134,38 @@ void Game::mainGame(SDL_Renderer* renderer) {
 			case SDLK_c:
 				snake.pause = false;
 				break;
-
 			}
 		}
 	}
-	snake.drawTail(renderer);
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
 }
 
+void Game::renderAfterClickBackButton(SDL_Renderer* renderer) {
+	///sound.playSound("assets/sound/click.wav");
+	tip = false;
+	SDL_RenderClear(renderer);
+	background.loadImage(renderer, "assets/images/background.jpg", 0, 50);
+	scoreboard.loadImageWithSize(renderer, "assets/images/scoreboard.png", 0, 0, 600, 50);
+	obstacles.renderObstacles(renderer, obstacles.level);
+	icon.loadImageWithSize(renderer, "assets/images/icon.png", 0, 0, 50, 50);
+	renderText(renderer, 70, 8, "Level:");
+	renderText(renderer, 143, 8, level);
+	renderText(renderer, 260, 8, "Score:");
+	renderNumber(renderer, 353, 8, snake.tail_size);
+	renderText(renderer, 445, 8, "Dead:");
+	renderNumber(renderer, 521, 8, dead);
+	cherry.printCherry(renderer);
+	snake.drawHead(renderer);
+	snake.drawTail(renderer);
+	SDL_RenderPresent(renderer);
+}
+
 void Game::runningGame(SDL_Renderer* renderer) {
 	obstacles.createObstacles();
-	sound.playMusic("sound/menuMusic.ogg");
+	//sound.playMusic("assets/sound/menuMusic.ogg");
 	while (isRunning == true) {
-		image.showMenu(renderer);
+		menu.loadImage(renderer, "assets/images/menu.png", 0, 0);
 		SDL_RenderPresent(renderer);
 		SDL_RenderClear(renderer);
 		while (SDL_PollEvent(&mainEvent)) {
@@ -194,11 +173,14 @@ void Game::runningGame(SDL_Renderer* renderer) {
 			if (mainEvent.type == SDL_MOUSEBUTTONDOWN) {
 				int posX = mainEvent.button.x;
 				int posY = mainEvent.button.y;
+				//level
 				if (posX >= 85 && posX <= 269 && posY >= 419 && posY <= 461) {
 					isRunning = true;
 					levelRunning = true;
+					//sound.freeSoundBefore();
+				//	sound.playSound("assets/sound/click.wav");
 					while (levelRunning == true) {
-						image.chooseLevel(renderer);
+						chooseLevel.loadImage(renderer, "assets/images/level.png", 0, 0);
 						SDL_RenderPresent(renderer);
 						while (SDL_PollEvent(&levelEvent)) {
 							if (levelEvent.type == SDL_QUIT) {
@@ -208,44 +190,52 @@ void Game::runningGame(SDL_Renderer* renderer) {
 							if (levelEvent.type == SDL_MOUSEBUTTONDOWN) {
 								int levelX = levelEvent.button.x;
 								int levelY = levelEvent.button.y;
+							//	sound.freeSoundBefore();
+								//easy
 								if (levelX >= 102 && levelX <= 498 && levelY >= 117 && levelY <= 176) {
-									sound.freeSoundBefore();
-									sound.playMusic("sound/mainGame.ogg");
+									//sound.playSound("assets/sound/click.wav");
+									//sound.playMusic("assets/sound/mainGame.ogg");
 									gameRunning = true;
-									obstacles.obs = 1;
+									obstacles.level = "easy";
 									while (gameRunning == true) {
-										game.mainGame(renderer);
+										mainGame(renderer);
 									}
 								}
+								//medium
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 246 && levelY <= 305) {
-									sound.freeSoundBefore();
-									sound.playMusic("sound/mainGame.ogg");
+									//sound.playSound("assets/sound/click.wav");
+									//sound.playMusic("assets/sound/mainGame.ogg");
 									gameRunning = true;
-									obstacles.obs = 2;
+									obstacles.level = "medium";
 									while (gameRunning == true) {
-										game.mainGame(renderer);
+										mainGame(renderer);
 									}
 								}
+								//hard
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 375 && levelY <= 434) {
-									sound.freeSoundBefore();
-									sound.playMusic("sound/mainGame.ogg");
+									//sound.playSound("assets/sound/click.wav");
+									//sound.playMusic("assets/sound/mainGame.ogg");
 									gameRunning = true;
-									obstacles.obs = 3;
+									obstacles.level = "hard";
 									while (gameRunning == true) {
-										game.mainGame(renderer);
+										mainGame(renderer);
 									}
 								}
+								//quit
 								else if (levelX >= 202 && levelX <= 398 && levelY >= 518 && levelY <= 562) {
+									//sound.playSound("assets/sound/click.wav");
 									levelRunning = false;
 								}
 							}
 						}
 					}
 				}
+				//instruction
 				else if (posX >= 334 && posX <= 518 && posY >= 419 && posY <= 461) {
 					insRunning = true;
+					//sound.playSound("assets/sound/click.wav");
 					while (insRunning == true) {
-						image.showInstruction(renderer);
+						instruction.loadImage(renderer, "assets/images/instruction.png", 0, 0);
 						SDL_RenderPresent(renderer);
 						while (SDL_PollEvent(&insEvent)) {
 							if (insEvent.type == SDL_QUIT) {
@@ -255,21 +245,23 @@ void Game::runningGame(SDL_Renderer* renderer) {
 							if (insEvent.type == SDL_MOUSEBUTTONDOWN) {
 								int insX = insEvent.button.x;
 								int insY = insEvent.button.y;
+								//back to menu
 								if (insX >= 202 && insX <= 398 && insY >= 533 && insY <= 578) {
+									//sound.playSound("assets/sound/click.wav");
 									insRunning = false;
 								}
 							}
 						}
 					}
 				}
+				//quit
 				else if (posX >= 207 && posX <= 391 && posY >= 498 && posY <= 540) {
+					//sound.playSound("assets/sound/click.wav");
 					isRunning = false;
 					SDL_Quit();
 				}
 			}
-
 		}
-
 	}
 	SDL_RenderClear(renderer);
 
@@ -277,8 +269,8 @@ void Game::runningGame(SDL_Renderer* renderer) {
 
 void Game::renderNumber(SDL_Renderer* renderer, int x, int y, int var) {
 	TTF_Init();
-	TTF_Font* font = TTF_OpenFont("font.ttf", 27);
-	SDL_Color color = { 255, 255, 255 };
+	TTF_Font* font = TTF_OpenFont("font2.ttf", 27);
+	SDL_Color color = { 0, 0, 0 };
 	std::string text;
 	std::stringstream value;
 	value << var;
@@ -286,26 +278,26 @@ void Game::renderNumber(SDL_Renderer* renderer, int x, int y, int var) {
 	SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 	SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
-	TTF_CloseFont(font);
 	SDL_RenderCopy(renderer, texture, NULL, &dstRect);
 	SDL_FreeSurface(textSurface);
 	SDL_DestroyTexture(texture);
+	TTF_CloseFont(font);
 }
 
 void Game::renderText(SDL_Renderer* renderer, int x, int y, std::string text) {
 	TTF_Init();
-	TTF_Font* font = TTF_OpenFont("font.ttf", 27);
-	SDL_Color color = { 255, 255, 255 };
+	TTF_Font* font = TTF_OpenFont("font2.ttf", 27);
+	SDL_Color color = { 0, 0, 0 };
 	SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 	SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
-	TTF_CloseFont(font);
 	SDL_RenderCopy(renderer, texture, NULL, &dstRect);
 	SDL_FreeSurface(textSurface);
 	SDL_DestroyTexture(texture);
+	TTF_CloseFont(font);
 }
 
-void Game::playAgain() {
+void Game::reset() {
 	gameRunning = true;
 	isRunning = true;
 	//snake.tmp = 1;
@@ -323,7 +315,7 @@ void Game::playAgain() {
 	snake.pos_head.y = 12;
 	snake.velocity.X = 1;
 	snake.velocity.Y = 0;
-	delay = 40;
+	delay = 43;
 
 }
 

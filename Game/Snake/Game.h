@@ -9,39 +9,51 @@ const int FRAME_DELAY = 1000 / FPS;
 #include <vector>
 #include <sstream>
 #include <chrono>
-
+#include "Backround.h"
+#include "Image.h"
+#include "Snake.h"
+#include "Obstacles.h"
+#include "Sound.h"
 using namespace std::chrono;
-
-const int WIDTH = 600;
-const int HEIGHT = 600;
-
 
 class Game {
 public:
-	//void randomCherry(SDL_Renderer* renderer);
 	void mainGame(SDL_Renderer* renderer);
 	void runningGame(SDL_Renderer* renderer);
-	void playAgain();
+	void reset();
 	void renderNumber(SDL_Renderer* renderer, int x, int y, int var);
 	void renderText(SDL_Renderer* renderer, int x, int y, std::string text);
+	void renderAfterClickBackButton(SDL_Renderer* renderer);
+	bool checkDelay = false;
+	bool isRunning = true;
+private:	
+	Image background = {};
+	Image scoreboard = {};
+	Image icon = {};
+	Image playAgain = {};
+	Image returnMenu = {};
+	Image renderTip = {};
+	Image backButton = {};
+	Image TipIMG = {};
+	Image menu = {};
+	Image chooseLevel = {};
+	Image instruction = {};
+	Sound crash = {};
+	//Obstacles obstacles = {};
+	//Cherry cherrryGame = {};
 	SDL_Event gameEvent;
 	SDL_Event mainEvent;
 	SDL_Event insEvent;
 	SDL_Event levelEvent;
-	SDL_Event dieEvent;
-	bool isRunning = true;
+	SDL_Event deadEvent;
 	bool gameRunning = true;
 	bool insRunning = true;
 	bool levelRunning = true;
-	int die = 0;
+	int dead = 0;
 	bool again = false;
 	bool gameContinue = false;
-	bool checkDelay = false;
-	int delay = 50;
+	int delay = 43;
 	std::string level;
 	bool tip = false;
-private:
-
-
 };
 #endif

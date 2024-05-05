@@ -8,8 +8,9 @@
 #include <vector>
 #include "Cherry.h"
 #include "Game.h"
-const int snakeWidth = 24;
-const int snakeHeight = 24;
+#include"Obstacles.h"
+const int snakeWidth = 25;
+const int snakeHeight = 25;
 
 struct pos {
 	int x;
@@ -22,36 +23,28 @@ struct velo {
 
 
 class Snake {
-
-private:
 public:
+	velo velocity;
 	pos tail[10000];
+	pos pos_head = { 0,12 };
 	int tailNearHead = 0;
 	int tailEnd = 0;
-	int tail_size = 0;
-	pos pos_head = { 0,12 };
-	velo velocity;
-	int tmp = 1;
-	bool isRunning;
 	double headAngle = 0;
+	int tail_size = 0;
 	int checkDirection[10000];
 	int checkCorner[10000];
-	int isUpping = 0;
-	int isDowning = 0;
-	int isGoingRight = 0;
-	int	isGoingLeft = 0;
 	bool pause = false;
 	std::vector<std::pair<int, int>> snakeObs;
-	void snakeEatCherry(Cherry& cherry, SDL_Renderer* renderer);
+	void stopMoving();
+	bool eatCherry(Cherry& cherry, SDL_Renderer* renderer);
 	void renderAngle(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, int w, int h, int angle);
-	void outOfWindow();
-	void handleEvents(Snake& snake);
+	void goOutOfWindow();
 	void drawHead(SDL_Renderer* renderer);
 	void drawTail(SDL_Renderer* renderer);
 	void renderTail(SDL_Renderer* renderer, SDL_Surface* tmpSurface, SDL_Texture* tmpTexture, std::string path, pos tail_pos);
 	bool tailCollision();
 	void draw(SDL_Renderer* renderer, Snake& snake);
-	void snakeMove();
+	void Move();
 	void turnRight();
 	void turnLeft();
 	void turnUp();
@@ -61,6 +54,15 @@ public:
 	int checkDuplicateDirectionDown = 0;
 	int checkDuplicateDirectionRight = 0;
 	int checkDuplicateDirectionLeft = 0;
+private:
+	int isUpping = 0;
+	int isDowning = 0;
+	int isGoingRight = 0;
+	int	isGoingLeft = 0;
+	int tmp = 1;
+	bool isRunning;
+	//Cherry cherry = {};
+//	Obstacles snakeObstacles = {};
 };
 
 #endif

@@ -1,14 +1,5 @@
 ﻿#include"Backround.h"
 
-void Background::loadBackground(SDL_Renderer* renderer) {
-	SDL_Surface* tmpSurface = IMG_Load("assets/wall2.jpg");
-	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-	SDL_Rect desrect = { 0,50,600,600 };
-	SDL_RenderCopy(renderer, tmpTexture, NULL, &desrect);
-	SDL_DestroyTexture(tmpTexture);
-	SDL_FreeSurface(tmpSurface);
-}
-
 void Background::drawCell(SDL_Renderer* renderer) {
 	int res = 0;
 	for (int i = 0; i <= 600; i += 25) {
