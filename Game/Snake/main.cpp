@@ -14,8 +14,6 @@ Uint32 frameStart;
 int frameTime;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
-Obstacles obstacles1 = {};
-Snake snake1 = {};
 int main(int argc, char* argv[]) {
 	Game game = {};
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {

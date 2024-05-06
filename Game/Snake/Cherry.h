@@ -9,13 +9,13 @@ class Cherry {
 public:
 	void generateCherry();
 	void printCherry(SDL_Renderer* renderer);
-	std::vector<std::pair<int, int>> cherryObs;
+	std::vector<std::pair<int, int>> getObstaclesLevel;
 	int PosX = 12;
 	int PosY = 12;
-private:
-	int cherrySize = 20;
 	int random_numberX = 12;
 	int random_numberY = 12;
+private:
+	int cherrySize = 20;
 	//Obstacles cherry_Obstacles = {};
 };
 

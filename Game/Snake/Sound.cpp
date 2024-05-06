@@ -1,17 +1,17 @@
-#include"Sound.h"
+#include "Sound.h"
+
 
 void Sound::playMusic(std::string path) {
-	Mix_Music* sound;
-	sound = Mix_LoadMUS(path.c_str());
-	Mix_PlayMusic(sound, -1);
+    Mix_Music* music = Mix_LoadMUS(path.c_str());
+    Mix_PlayMusic(music, -1);
 }
 
 void Sound::playSound(std::string path) {
-	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
-	Mix_PlayChannel(-1, chunk, 0);
+    Mix_Chunk* sound = Mix_LoadWAV(path.c_str());
+    Mix_PlayChannel(-1, sound, 0);
+    Mix_FreeChunk(sound);
 }
 
-void Sound::freeSoundBefore() {
-	Mix_HaltMusic();
-
+void Sound::stopMusic() {
+    Mix_HaltMusic();
 }

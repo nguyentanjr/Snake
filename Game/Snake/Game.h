@@ -38,7 +38,10 @@ private:
 	Image menu = {};
 	Image chooseLevel = {};
 	Image instruction = {};
+	Image pauseButton = {};
+	Image playButton = {};
 	Sound crash = {};
+	Sound click = {};
 	//Obstacles obstacles = {};
 	//Cherry cherrryGame = {};
 	SDL_Event gameEvent;
@@ -55,5 +58,6 @@ private:
 	int delay = 43;
 	std::string level;
 	bool tip = false;
+	bool checkESC = false;
 };
 #endif

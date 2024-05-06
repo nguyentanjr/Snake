@@ -6,17 +6,14 @@ void Cherry::generateCherry() {
 		random_numberX = rand() % 22 + 2;
 		random_numberY = rand() % 22 + 2;
 		bool check = true;
-		for (int i = 0; i < cherryObs.size(); i++) {
-			if (random_numberX == cherryObs[i].first && random_numberY == cherryObs[i].second) {
+		for (int i = 0; i < getObstaclesLevel.size(); i++) {
+			if (random_numberX == getObstaclesLevel[i].first && random_numberY == getObstaclesLevel[i].second) {
 				check = false;
 				break;
 			}
 		}
 		if (check == true)break;
 	}
-	PosX = random_numberX * 25;
-	PosY = random_numberY * 25;
-
 }
 void Cherry::printCherry(SDL_Renderer* renderer) {
 	SDL_Surface* tmpSurface = IMG_Load("assets/images/cherry.png");

@@ -33,8 +33,9 @@ public:
 	int tail_size = 0;
 	int checkDirection[10000];
 	int checkCorner[10000];
+	bool trick = false;
 	bool pause = false;
-	std::vector<std::pair<int, int>> snakeObs;
+	std::vector<std::pair<int, int>> getObstaclesLevel;
 	void stopMoving();
 	bool eatCherry(Cherry& cherry, SDL_Renderer* renderer);
 	void renderAngle(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, int w, int h, int angle);

@@ -1,15 +1,16 @@
 #ifndef _SOUND__H
 #define _SOUND__H
-#include <SDL_mixer.h>
+
 #include <SDL.h>
-#include<iostream>
+#include <SDL_mixer.h>
+#include <string>
+
 class Sound {
 public:
 	void playMusic(std::string path);
 	void playSound(std::string path);
-	void freeSoundBefore();
-
+	void stopMusic();
+	void freeMusic();
 };
 
-
-#endif
+#endif 
