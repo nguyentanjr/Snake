@@ -16,6 +16,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 int main(int argc, char* argv[]) {
 	Game game = {};
+	Sound eat = {};
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
 		if (window != NULL) {
@@ -31,6 +32,7 @@ int main(int argc, char* argv[]) {
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 	while (game.isRunning) {
 		frameStart = SDL_GetTicks();
+		game.load();
 		game.runningGame(renderer);
 		frameTime = SDL_GetTicks() - frameStart;
 		if (FRAME_DELAY > frameTime) {

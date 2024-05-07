@@ -26,6 +26,7 @@ public:
 	void renderAfterClickBackButton(SDL_Renderer* renderer);
 	bool checkDelay = false;
 	bool isRunning = true;
+	void load();
 private:	
 	Image background = {};
 	Image scoreboard = {};
@@ -42,6 +43,7 @@ private:
 	Image playButton = {};
 	Sound crash = {};
 	Sound click = {};
+	Sound eat = {};
 	//Obstacles obstacles = {};
 	//Cherry cherrryGame = {};
 	SDL_Event gameEvent;
@@ -55,7 +57,7 @@ private:
 	int dead = 0;
 	bool again = false;
 	bool gameContinue = false;
-	int delay = 43;
+	int delay = 33;
 	std::string level;
 	bool tip = false;
 	bool checkESC = false;

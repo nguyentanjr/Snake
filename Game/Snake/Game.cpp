@@ -4,7 +4,11 @@
 Cherry cherry = {};
 Snake snake = {};
 Obstacles obstacles = {};
-
+void Game::load() {
+	eat.loadSound("assets/sound/eatCherry.wav");
+	click.loadSound("assets/sound/click.wav");
+	crash.loadSound("assets/sound/hitCollision.wav");
+}
 void Game::mainGame(SDL_Renderer* renderer) {
 	background.loadImage(renderer, "assets/images/background.jpg", 0, 50);
 	scoreboard.loadImageWithSize(renderer, "assets/images/scoreboard.png", 0, 0,600,50);
@@ -31,7 +35,10 @@ void Game::mainGame(SDL_Renderer* renderer) {
 	snake.Move();
 	snake.goOutOfWindow();
 	cherry.printCherry(renderer);
-	if(snake.eatCherry(cherry, renderer))checkDelay = false;
+	if (snake.eatCherry(cherry, renderer)) {
+		checkDelay = false;
+		eat.playSound();
+	}
 	snake.drawTail(renderer);
 	snake.drawHead(renderer);
 	std::this_thread::sleep_for(std::chrono::milliseconds(delay));
@@ -41,11 +48,11 @@ void Game::mainGame(SDL_Renderer* renderer) {
 		checkDelay = true;
 	}
 	if (snake.tailCollision() == true) {
-		crash.playSound("assets/sound/hitCollision.wav");
+		crash.playSound();
 		dead++;
 		snake.stopMoving();
 		again = true;
-		while (again) {
+		while (again) {	
 			if (tip == false) {
 				playAgain.loadImage(renderer, "assets/images/playagain.png", HEIGHT / 15, (WIDTH / 2) - (40 / 2));
 				returnMenu.loadImage(renderer, "assets/images/returntomenu.png", HEIGHT / 15 + 320, (WIDTH / 2) - (40 / 2));
@@ -66,7 +73,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 					if (deadX >= 40 && deadX <= 220 && deadY >= 280 && deadY <= 320)
 					{
 						again = false;
-						click.playSound("assets/sound/click.wav");
+						click.playSound();
 						reset();
 						mainGame(renderer);
 					}
@@ -75,13 +82,13 @@ void Game::mainGame(SDL_Renderer* renderer) {
 					{
 						again = false;
 						dead = 0;
-						click.playSound("assets/sound/click.wav");
+						click.playSound();
 						reset();
 						runningGame(renderer);
 					}
 					if (deadX >= 200 && deadX <= 380 && deadY >= 200 && deadY <= 240) {
 						tip = true;
-							click.playSound("assets/sound/click.wav");
+							click.playSound();
 							TipIMG.loadImage(renderer, "assets/images/tipIMG.png", 0, 0);
 							backButton.loadImageWithSize(renderer, "assets/images/back.png", 0, 0, 50, 50);
 							SDL_RenderPresent(renderer);
@@ -150,7 +157,7 @@ void Game::mainGame(SDL_Renderer* renderer) {
 }
 
 void Game::renderAfterClickBackButton(SDL_Renderer* renderer) {
-	click.playSound("assets/sound/click.wav");
+	click.playSound();
 	tip = false;
 	SDL_RenderClear(renderer);
 	background.loadImage(renderer, "assets/images/background.jpg", 0, 50);
@@ -185,8 +192,8 @@ void Game::runningGame(SDL_Renderer* renderer) {
 				if (posX >= 85 && posX <= 269 && posY >= 419 && posY <= 461) {
 					isRunning = true;
 					levelRunning = true;
-				//	crash.stopMusic();
-					click.playSound("assets/sound/click.wav");
+					crash.stopMusic();
+					click.playSound();
 					while (levelRunning == true) {
 						chooseLevel.loadImage(renderer, "assets/images/level.png", 0, 0);
 						SDL_RenderPresent(renderer);
@@ -198,10 +205,9 @@ void Game::runningGame(SDL_Renderer* renderer) {
 							if (levelEvent.type == SDL_MOUSEBUTTONDOWN) {
 								int levelX = levelEvent.button.x;
 								int levelY = levelEvent.button.y;
-							//	sound.freeSoundBefore();
 								//easy
 								if (levelX >= 102 && levelX <= 498 && levelY >= 117 && levelY <= 176) {
-									click.playSound("assets/sound/click.wav");
+									click.playSound();
 									crash.playMusic("assets/sound/mainGame.ogg");
 									gameRunning = true;
 									obstacles.level = "easy";
@@ -211,7 +217,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								}
 								//medium
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 246 && levelY <= 305) {
-									click.playSound("assets/sound/click.wav");
+									click.playSound();
 									crash.playMusic("assets/sound/mainGame.ogg");
 									gameRunning = true;
 									obstacles.level = "medium";
@@ -221,7 +227,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								}
 								//hard
 								else if (levelX >= 102 && levelX <= 498 && levelY >= 375 && levelY <= 434) {
-									click.playSound("assets/sound/click.wav");
+									click.playSound();
 									crash.playMusic("assets/sound/mainGame.ogg");
 									gameRunning = true;
 									obstacles.level = "hard";
@@ -231,7 +237,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								}
 								//quit
 								else if (levelX >= 202 && levelX <= 398 && levelY >= 518 && levelY <= 562) {
-									click.playSound("assets/sound/click.wav");
+									click.playSound();
 									levelRunning = false;
 								}
 							}
@@ -241,7 +247,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 				//instruction
 				else if (posX >= 334 && posX <= 518 && posY >= 419 && posY <= 461) {
 					insRunning = true;
-					click.playSound("assets/sound/click.wav");
+					click.playSound();
 					while (insRunning == true) {
 						instruction.loadImage(renderer, "assets/images/instruction.png", 0, 0);
 						SDL_RenderPresent(renderer);
@@ -255,7 +261,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 								int insY = insEvent.button.y;
 								//back to menu
 								if (insX >= 202 && insX <= 398 && insY >= 533 && insY <= 578) {
-									crash.playSound("assets/sound/click.wav");
+									click.playSound();
 									insRunning = false;
 								}
 							}
@@ -264,7 +270,7 @@ void Game::runningGame(SDL_Renderer* renderer) {
 				}
 				//quit
 				else if (posX >= 207 && posX <= 391 && posY >= 498 && posY <= 540) {
-					click.playSound("assets/sound/click.wav");
+					click.playSound();
 					isRunning = false;
 					SDL_Quit();
 				}
@@ -324,7 +330,7 @@ void Game::reset() {
 	snake.pos_head.y = 12;
 	snake.velocity.X = 1;
 	snake.velocity.Y = 0;
-	delay = 43;
+	delay = 33;
 
 }
 
