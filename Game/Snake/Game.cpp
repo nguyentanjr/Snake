@@ -4,7 +4,7 @@
 Cherry cherry = {};
 Snake snake = {};
 Obstacles obstacles = {};
-void Game::load() {
+void Game::loadSound() {
 	eat.loadSound("assets/sound/eatCherry.wav");
 	click.loadSound("assets/sound/click.wav");
 	crash.loadSound("assets/sound/hitCollision.wav");
@@ -315,8 +315,8 @@ void Game::reset() {
 	gameRunning = true;
 	isRunning = true;
 	snake.tail_size = 0;
-	snake.tailEnd = 0;
-	snake.tailNearHead = 0;
+	snake.lastTail = 0;
+	snake.firstTail = 0;
 	snake.headAngle = 0;
 	snake.checkDuplicateDirectionDown = 0;
 	snake.checkDuplicateDirectionUp = 0;

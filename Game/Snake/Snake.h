@@ -27,8 +27,8 @@ public:
 	velo velocity;
 	pos tail[10000];
 	pos pos_head = { 0,12 };
-	int tailNearHead = 0;
-	int tailEnd = 0;
+	int firstTail = 0;
+	int lastTail = 0;
 	double headAngle = 0;
 	int tail_size = 0;
 	int checkDirection[10000];

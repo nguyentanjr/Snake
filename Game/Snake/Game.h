@@ -26,7 +26,7 @@ public:
 	void renderAfterClickBackButton(SDL_Renderer* renderer);
 	bool checkDelay = false;
 	bool isRunning = true;
-	void load();
+	void loadSound();
 private:	
 	Image background = {};
 	Image scoreboard = {};

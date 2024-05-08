@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 	while (game.isRunning) {
 		frameStart = SDL_GetTicks();
-		game.load();
+		game.loadSound();
 		game.runningGame(renderer);
 		frameTime = SDL_GetTicks() - frameStart;
 		if (FRAME_DELAY > frameTime) {
